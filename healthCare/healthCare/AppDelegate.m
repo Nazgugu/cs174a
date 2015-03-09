@@ -19,7 +19,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"loginSuccess"])
+    {
+        [self presentTabel];
+    }
+    else
+    {
+        [self goToLogin];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"loginSuccess"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
     return YES;
 }
 
