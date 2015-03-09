@@ -19,6 +19,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"loginSuccess"])
     {
         [self presentTabel];
@@ -34,6 +36,7 @@
 
 - (void)goToLogin
 {
+    NSLog(@"login");
     LoginViewController *login = [[LoginViewController alloc] init];
     self.window.rootViewController = login;
     [self.window makeKeyAndVisible];
