@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "LoginViewController.h"
+#import "TabBarViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,7 +19,22 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
     return YES;
+}
+
+- (void)goToLogin
+{
+    LoginViewController *login = [[LoginViewController alloc] init];
+    self.window.rootViewController = login;
+    [self.window makeKeyAndVisible];
+}
+
+- (void)presentTabel
+{
+    TabBarViewController *tab = [[TabBarViewController alloc] init];
+    self.window.rootViewController = tab;
+    [self.window makeKeyAndVisible];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
