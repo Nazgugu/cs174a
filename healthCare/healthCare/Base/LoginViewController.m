@@ -8,10 +8,11 @@
 
 #import "LoginViewController.h"
 #import "InsetTextField.h"
+#import "connectionManager.h"
 
 @interface LoginViewController ()
-@property (strong, nonatomic) InsetTextField *ipText;
-@property (strong, nonatomic) InsetTextField *portText;
+@property (strong, nonatomic) InsetTextField *nameText;
+@property (strong, nonatomic) InsetTextField *passwordText;
 @property (strong, nonatomic) UIButton *loginButton;
 @property (strong, nonatomic) InsetTextField *serverAddress;
 @end
@@ -25,27 +26,27 @@
     UILabel *ipLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, self.view.frame.size.height/8, 150, 35)];
     ipLabel.text = @"Enter Username:";
     
-    self.ipText = [[InsetTextField alloc] initWithFrame:CGRectMake(20, ipLabel.frame.origin.y + 45, 240, 40)];
-    self.ipText.placeholder = @"Eg:root";
-    self.ipText.layer.borderWidth = 1.5f;
-    self.ipText.layer.borderColor = [UIColor blackColor].CGColor;
-    self.ipText.layer.cornerRadius = 5.0f;
-    self.ipText.layer.masksToBounds = YES;
-    self.ipText.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    self.nameText = [[InsetTextField alloc] initWithFrame:CGRectMake(20, ipLabel.frame.origin.y + 45, 240, 40)];
+    self.nameText.placeholder = @"Eg:root";
+    self.nameText.layer.borderWidth = 1.5f;
+    self.nameText.layer.borderColor = [UIColor blackColor].CGColor;
+    self.nameText.layer.cornerRadius = 5.0f;
+    self.nameText.layer.masksToBounds = YES;
+    self.nameText.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     
-    UILabel *portLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, self.ipText.frame.origin.y + 55, 150, 35)];
+    UILabel *portLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, self.nameText.frame.origin.y + 55, 150, 35)];
     portLabel.text = @"Enter Password:";
     
-    self.portText = [[InsetTextField alloc] initWithFrame:CGRectMake(20, portLabel.frame.origin.y + 45, 240, 40)];
-    self.portText.placeholder = @"enter password";
-    self.portText.secureTextEntry = YES;
-    self.portText.layer.borderWidth = 1.5f;
-    self.portText.layer.borderColor = [UIColor blackColor].CGColor;
-    self.portText.layer.cornerRadius = 5.0f;
-    self.portText.layer.masksToBounds = YES;
-    self.portText.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    self.passwordText = [[InsetTextField alloc] initWithFrame:CGRectMake(20, portLabel.frame.origin.y + 45, 240, 40)];
+    self.passwordText.placeholder = @"enter password";
+    self.passwordText.secureTextEntry = YES;
+    self.passwordText.layer.borderWidth = 1.5f;
+    self.passwordText.layer.borderColor = [UIColor blackColor].CGColor;
+    self.passwordText.layer.cornerRadius = 5.0f;
+    self.passwordText.layer.masksToBounds = YES;
+    self.passwordText.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     
-    UILabel *ipAddLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, self.portText.frame.origin.y + 55, 150, 35)];
+    UILabel *ipAddLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, self.passwordText.frame.origin.y + 55, 150, 35)];
     ipAddLabel.text = @"Enter Server IP:";
     
     self.serverAddress = [[InsetTextField alloc] initWithFrame:CGRectMake(20, ipAddLabel.frame.origin.y + 50, 240, 40)];
@@ -69,9 +70,9 @@
     [self.view addGestureRecognizer:tap];
     
     [self.view addSubview:ipLabel];
-    [self.view addSubview:self.ipText];
+    [self.view addSubview:self.nameText];
     [self.view addSubview:portLabel];
-    [self.view addSubview:self.portText];
+    [self.view addSubview:self.passwordText];
     [self.view addSubview:ipAddLabel];
     [self.view addSubview:self.serverAddress];
     [self.view addSubview:self.loginButton];
@@ -80,6 +81,9 @@
 - (void)loginDataBase
 {
     NSLog(@"clicked");
+    [[connectionManager sharedManager] connectWithIpAddress:self.serverAddress.text andUserName:self.nameText.text andPassword:self.passwordText.text inBackgroundWithBlock:^(BOOL succeed, NSString *error) {
+        
+    }];
 }
 
 - (void)closeKeyBoard
