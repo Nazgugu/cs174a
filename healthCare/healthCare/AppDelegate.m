@@ -51,13 +51,13 @@
     TabBarViewController *tab = [[TabBarViewController alloc] init];
     PatientViewController *patientController  = [[PatientViewController alloc] init];
     UINavigationController  *nav1 = [[UINavigationController alloc] initWithRootViewController:patientController];
-    nav1.title = @"Patient";
+    nav1.tabBarItem.title = @"patient";
     DoctorViewController *doctorController = [[DoctorViewController alloc] init];
     UINavigationController  *nav2 = [[UINavigationController alloc] initWithRootViewController:doctorController];
-    nav2.title = @"Doctor";
+    nav2.tabBarItem.title = @"Doctor";
     AdminViewController *adminController = [[AdminViewController alloc] init];
     UINavigationController  *nav3 = [[UINavigationController alloc] initWithRootViewController:adminController];
-    nav1.title = @"Administrator";
+    nav3.tabBarItem.title = @"Administrator";
     tab.viewControllers = @[nav1,nav2,nav3];
     self.window.rootViewController = tab;
     [self.window makeKeyAndVisible];

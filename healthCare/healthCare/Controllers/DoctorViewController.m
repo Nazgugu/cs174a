@@ -22,7 +22,6 @@
     UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
     self.navigationItem.rightBarButtonItem = logout;
     self.tabBarController.delegate = self;
-    self.tabBarItem.title = @"Doctor";
 }
 
 - (void)logout
