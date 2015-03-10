@@ -9,6 +9,10 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "TabBarViewController.h"
+#import "PatientViewController.h"
+#import "DoctorViewController.h"
+#import "AdminViewController.h"
+
 
 @interface AppDelegate ()
 
@@ -45,6 +49,16 @@
 - (void)presentTabel
 {
     TabBarViewController *tab = [[TabBarViewController alloc] init];
+    PatientViewController *patientController  = [[PatientViewController alloc] init];
+    UINavigationController  *nav1 = [[UINavigationController alloc] initWithRootViewController:patientController];
+    nav1.title = @"Patient";
+    DoctorViewController *doctorController = [[DoctorViewController alloc] init];
+    UINavigationController  *nav2 = [[UINavigationController alloc] initWithRootViewController:doctorController];
+    nav2.title = @"Doctor";
+    AdminViewController *adminController = [[AdminViewController alloc] init];
+    UINavigationController  *nav3 = [[UINavigationController alloc] initWithRootViewController:adminController];
+    nav1.title = @"Administrator";
+    tab.viewControllers = @[nav1,nav2,nav3];
     self.window.rootViewController = tab;
     [self.window makeKeyAndVisible];
 }

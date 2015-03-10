@@ -7,10 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PatientViewController.h"
-#import "DoctorViewController.h"
-#import "AdminViewController.h"
-
 @interface TabBarViewController : UITabBarController
 
 @end

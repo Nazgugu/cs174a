@@ -7,8 +7,9 @@
 //
 
 #import "DoctorViewController.h"
+#import "LoginViewController.h"
 
-@interface DoctorViewController ()
+@interface DoctorViewController () <UITabBarControllerDelegate>
 
 @end
 
@@ -17,6 +18,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.title = @"Doctor";
+    UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
+    self.navigationItem.rightBarButtonItem = logout;
+    self.tabBarController.delegate = self;
+    self.tabBarItem.title = @"Doctor";
+}
+
+- (void)logout
+{
+    LoginViewController *login = [[LoginViewController alloc] init];
+    [self presentViewController:login animated:YES completion:^{
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
