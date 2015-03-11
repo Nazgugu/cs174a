@@ -9,7 +9,6 @@
 #import "connectionManager.h"
 #import <AFNetworking/AFNetworking.h>
 #import "ProgressHUD.h"
-#import "patient.h"
 
 @interface connectionManager()
 
@@ -54,7 +53,7 @@
             }
             else
             {
-                block(NO,@"netWork failure");
+                block(NO,[dict objectForKey:@"error"]);
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                 [ProgressHUD dismiss];
             }
@@ -115,5 +114,49 @@
     }];
     [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
 }
+
+- (void)updatePatientInfoWithPatient:(patient *)patient inBackgroundWithBlock:(boolBlock)block
+{
+    [ProgressHUD show:@"Fetching" Interaction:NO];
+    NSLog(@"patient = %@",patient.patientId);
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [[AFHTTPRequestOperationManager manager].operationQueue cancelAllOperations];
+    _urlString = [NSString stringWithFormat:@"http://%@:8888/modifyPatient.php",[[NSUserDefaults standardUserDefaults] objectForKey:@"serverKey"]];
+    NSLog(@"url = %@",_urlString);
+    NSURL *url = [NSURL URLWithString:_urlString];
+    NSMutableURLRequest *requst = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:2];
+    [requst setHTTPMethod:@"POST"];
+    [requst setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
+    NSString *postingString = [NSString stringWithFormat:@"patientId=%@&GivenName=%@&FamilyName=%@&Suffix=%@&Gender=%@&BirthTime=%@&providerId=%@&guardianNo=%@&Relationship=%@&FirstName=%@&LastName=%@&phone=%@&address=%@&city=%@&state=%@&zip=%@",patient.patientId,patient.GivenName,patient.FamilyName,patient.Suffix,patient.Gender,patient.BirthTime,patient.providerId,patient.GuardianNo,patient.Relationship,patient.FirstName,patient.LastName,patient.phone,patient.address,patient.city,patient.state,patient.zip];
+    [requst setHTTPBody:[postingString dataUsingEncoding:NSUTF8StringEncoding]];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:requst];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if ([responseObject isKindOfClass:[NSDictionary class]])
+        {
+            NSLog(@"%@",responseObject);
+            NSDictionary *dict = responseObject;
+            if ([[dict objectForKey:@"success"] boolValue])
+            {
+                block(YES,@"Update Success");
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [ProgressHUD dismiss];
+            }
+            else
+            {
+                block(NO,[dict objectForKey:@"error"]);
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [ProgressHUD dismiss];
+            }
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",[error description]);
+        block(NO,@"Network Error");
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [ProgressHUD dismiss];
+    }];
+    [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
+}
+
 
 @end

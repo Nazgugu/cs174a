@@ -111,6 +111,11 @@
     return YES;
 }
 
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    self.currentPatient.address = textView.text;
+}
+
 #pragma mark - textfield delegate
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
@@ -155,6 +160,23 @@
         [self.view setFrame:self.originalFrame];
     }];
     return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    self.currentPatient.GivenName = self.patientGivenNameField.text;
+    self.currentPatient.FamilyName = self.patientFamilyNameField.text;
+    self.currentPatient.Suffix = self.patientSuffixField.text;
+    self.currentPatient.Gender = self.patientGenderField.text;
+    self.currentPatient.BirthTime = self.patientBirthDayField.text;
+    self.currentPatient.providerId = self.patientProviderIdField.text;
+    self.currentPatient.Relationship = self.relationshipField.text;
+    self.currentPatient.FirstName = self.guardianFirstNameField.text;
+    self.currentPatient.LastName = self.guardianLastNameField.text;
+    self.currentPatient.phone = self.guardianPhoneField.text;
+    self.currentPatient.city = self.guardianCityField.text;
+    self.currentPatient.state = self.guardianStateField.text;
+    self.currentPatient.zip = self.guardianZipField.text;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -262,6 +284,17 @@
 
 //modify button method
 - (IBAction)modifyPatientData:(id)sender {
+    [[connectionManager sharedManager] updatePatientInfoWithPatient:self.currentPatient inBackgroundWithBlock:^(BOOL succeed, NSString *error) {
+       if (succeed)
+       {
+           UIAlertView *success = [[UIAlertView alloc] initWithTitle:@"Success" message:@"Successfully updated patient info" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+           [success show];
+       }
+        else
+        {
+            [self showErrorAlert:error];
+        }
+    }];
 }
 
 - (void)patientLogin

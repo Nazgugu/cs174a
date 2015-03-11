@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "patient.h"
 
 typedef void (^boolBlock)(BOOL succeed, NSString *error);
 typedef void (^objectBlock)(id Object, NSString *error);
@@ -17,6 +18,8 @@ typedef void (^objectBlock)(id Object, NSString *error);
 
 - (void)connectWithIpAddress:(NSString *)ip andUserName:(NSString *)userName andPassword:(NSString *)password inBackgroundWithBlock:(boolBlock)block;
 
+//fetch single patient
 - (void)fetchInBackgroundWithPatientId:(NSString *)patientId andBlock:(objectBlock)block;
 
+- (void)updatePatientInfoWithPatient:(patient *)patient inBackgroundWithBlock:(boolBlock)block;
 @end
