@@ -11,12 +11,13 @@
 #import "patient.h"
 #import "connectionManager.h"
 
-@interface PatientViewController () <UITabBarControllerDelegate, UIAlertViewDelegate>
+@interface PatientViewController () <UITabBarControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate, UITextViewDelegate>
 
 @property (strong, nonatomic) UIBarButtonItem *loginButton;
 
 @property (strong, nonatomic) UIBarButtonItem *logoutButton;
 
+@property (nonatomic) CGRect originalFrame;
 
 //patient
 @property (weak, nonatomic) IBOutlet UILabel *patientIdLabel;
@@ -80,11 +81,85 @@
     self.modifyButton.layer.cornerRadius = 5.0f;
     self.modifyButton.layer.masksToBounds = YES;
     
+    self.guardianPhoneField.delegate = self;
+    self.guardianPhoneField.tag = 1;
+    self.relationshipField.delegate = self;
+    self.relationshipField.tag = 2;
+    self.guardianAddressField.delegate = self;
+    self.guardianCityField.delegate = self;
+    self.guardianCityField.tag = 3;
+    self.guardianStateField.delegate = self;
+    self.guardianStateField.tag = 3;
+    self.guardianZipField.delegate = self;
+    self.guardianZipField.tag = 4;
 }
 
+#pragma mark - UITextView delegate
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    [UIView animateWithDuration:0.2f animations:^{
+        [self.view setFrame:CGRectMake(0,-50,self.view.frame.size.width,self.view.frame.size.height)];
+    }];
+    return YES;
+}
+
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView
+{
+    [UIView animateWithDuration:0.2f animations:^{
+        [self.view setFrame:self.originalFrame];
+    }];
+    return YES;
+}
+
+#pragma mark - textfield delegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    switch (textField.tag) {
+        case 1:
+        {
+            [UIView animateWithDuration:0.2f animations:^{
+                [self.view setFrame:CGRectMake(0,-15,self.view.frame.size.width,self.view.frame.size.height)];
+            }];
+        }
+            break;
+        case 2:
+        {
+            [UIView animateWithDuration:0.2f animations:^{
+                [self.view setFrame:CGRectMake(0,-25,self.view.frame.size.width,self.view.frame.size.height)];
+            }];
+        }
+            break;
+        case 3:
+        {
+            [UIView animateWithDuration:0.2f animations:^{
+                [self.view setFrame:CGRectMake(0,-65,self.view.frame.size.width,self.view.frame.size.height)];
+            }];
+        }
+            break;
+        case 4:
+        {
+            [UIView animateWithDuration:0.2f animations:^{
+                [self.view setFrame:CGRectMake(0,-105,self.view.frame.size.width,self.view.frame.size.height)];
+            }];
+        }
+            break;
+        default:
+            break;
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    [UIView animateWithDuration:0.2f animations:^{
+        [self.view setFrame:self.originalFrame];
+    }];
+    return YES;
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    self.originalFrame = self.view.frame;
     [self configureModifyButtonWithPatientDict:nil];
 }
 
@@ -97,13 +172,16 @@
 {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"currentPatient"])
     {
-        if (dict)
+        if (!self.currentPatient)
         {
-            self.currentPatient = [[patient alloc] initWithDictionary:dict];
-        }
-        else
-        {
-            [self logInWithId:[[NSUserDefaults standardUserDefaults] objectForKey:@"patientId"]];
+            if (dict)
+            {
+                self.currentPatient = [[patient alloc] initWithDictionary:dict];
+            }
+            else
+            {
+                [self logInWithId:[[NSUserDefaults standardUserDefaults] objectForKey:@"patientId"]];
+            }
         }
         self.modifyButton.enabled = YES;
         self.navigationItem.rightBarButtonItem = nil;

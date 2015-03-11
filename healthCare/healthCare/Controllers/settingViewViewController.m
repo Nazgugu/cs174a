@@ -20,8 +20,9 @@
     // Do any additional setup after loading the view.
     self.title = @"setting";
     self.view.backgroundColor = [UIColor whiteColor];
-    UIButton *logoutButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 50, self.view.frame.size.height/2 - 25, 100, 25)];
+    UIButton *logoutButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 50, self.view.frame.size.height/2 - 25, 100, 50)];
     [logoutButton setTitle:@"logout" forState:UIControlStateNormal];
+    [logoutButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
     logoutButton.layer.borderWidth = 1.0f;
     logoutButton.layer.borderColor = [UIColor grayColor].CGColor;
@@ -34,7 +35,8 @@
 {
     LoginViewController *login = [[LoginViewController alloc] init];
     [self presentViewController:login animated:YES completion:^{
-        
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"loginSuccess"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }];
 }
 

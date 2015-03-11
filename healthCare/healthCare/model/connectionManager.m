@@ -71,6 +71,7 @@
 - (void)fetchInBackgroundWithPatientId:(NSString *)patientId andBlock:(objectBlock)block
 {
     [ProgressHUD show:@"Fetching" Interaction:NO];
+    NSLog(@"patient = %@",patientId);
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [[AFHTTPRequestOperationManager manager].operationQueue cancelAllOperations];
     _urlString = [NSString stringWithFormat:@"http://%@:8888/patientLogin.php",[[NSUserDefaults standardUserDefaults] objectForKey:@"serverKey"]];
