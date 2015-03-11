@@ -27,6 +27,7 @@
 		AE84A67C1AAE254300B8F945 /* InsetTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = AE84A67B1AAE254300B8F945 /* InsetTextField.m */; };
 		AEF985011AB015C8000FF661 /* patient.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF985001AB015C8000FF661 /* patient.m */; };
 		AEF985041AB0322D000FF661 /* settingViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF985031AB0322D000FF661 /* settingViewViewController.m */; };
+		AEF985071AB0E822000FF661 /* Singleton.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF985061AB0E822000FF661 /* Singleton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,8 @@
 		AEF985001AB015C8000FF661 /* patient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = patient.m; path = model/patient.m; sourceTree = "<group>"; };
 		AEF985021AB0322D000FF661 /* settingViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = settingViewViewController.h; path = Controllers/settingViewViewController.h; sourceTree = "<group>"; };
 		AEF985031AB0322D000FF661 /* settingViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = settingViewViewController.m; path = Controllers/settingViewViewController.m; sourceTree = "<group>"; };
+		AEF985051AB0E822000FF661 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Singleton.h; path = model/Singleton.h; sourceTree = "<group>"; };
+		AEF985061AB0E822000FF661 /* Singleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Singleton.m; path = model/Singleton.m; sourceTree = "<group>"; };
 		C72C27E3013EA1C1EB543FCA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,6 +125,8 @@
 				AE35EA061AAF835700453E02 /* connectionManager.m */,
 				AEF984FF1AB015C8000FF661 /* patient.h */,
 				AEF985001AB015C8000FF661 /* patient.m */,
+				AEF985051AB0E822000FF661 /* Singleton.h */,
+				AEF985061AB0E822000FF661 /* Singleton.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -383,6 +388,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEF985071AB0E822000FF661 /* Singleton.m in Sources */,
 				AE84A6421AAD6CC600B8F945 /* AppDelegate.m in Sources */,
 				AE84A6651AAD6D2200B8F945 /* PatientViewController.m in Sources */,
 				AEF985041AB0322D000FF661 /* settingViewViewController.m in Sources */,

@@ -10,6 +10,7 @@
 #import "InsetTextField.h"
 #import "patient.h"
 #import "connectionManager.h"
+#import "Singleton.h"
 
 @interface PatientViewController () <UITabBarControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate, UITextViewDelegate>
 
@@ -41,8 +42,6 @@
 @property (weak, nonatomic) IBOutlet InsetTextField *guardianZipField;
 
 @property (weak, nonatomic) IBOutlet UIButton *modifyButton;
-
-@property (strong, nonatomic) patient *currentPatient;
 
 @property (strong, nonatomic) NSString *patientId;
 
@@ -113,7 +112,7 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
-    self.currentPatient.address = textView.text;
+    [Singleton sharedData].currentPatient.address = textView.text;
 }
 
 #pragma mark - textfield delegate
@@ -156,6 +155,7 @@
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
+    //NSLog(@"calling");
     [UIView animateWithDuration:0.2f animations:^{
         [self.view setFrame:self.originalFrame];
     }];
@@ -164,24 +164,29 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    self.currentPatient.GivenName = self.patientGivenNameField.text;
-    self.currentPatient.FamilyName = self.patientFamilyNameField.text;
-    self.currentPatient.Suffix = self.patientSuffixField.text;
-    self.currentPatient.Gender = self.patientGenderField.text;
-    self.currentPatient.BirthTime = self.patientBirthDayField.text;
-    self.currentPatient.providerId = self.patientProviderIdField.text;
-    self.currentPatient.Relationship = self.relationshipField.text;
-    self.currentPatient.FirstName = self.guardianFirstNameField.text;
-    self.currentPatient.LastName = self.guardianLastNameField.text;
-    self.currentPatient.phone = self.guardianPhoneField.text;
-    self.currentPatient.city = self.guardianCityField.text;
-    self.currentPatient.state = self.guardianStateField.text;
-    self.currentPatient.zip = self.guardianZipField.text;
+    //NSLog(@"called");
+    [Singleton sharedData].currentPatient.GivenName = self.patientGivenNameField.text;
+    [Singleton sharedData].currentPatient.FamilyName = self.patientFamilyNameField.text;
+    [Singleton sharedData].currentPatient.Suffix = self.patientSuffixField.text;
+    [Singleton sharedData].currentPatient.Gender = self.patientGenderField.text;
+    [Singleton sharedData].currentPatient.BirthTime = self.patientBirthDayField.text;
+    [Singleton sharedData].currentPatient.providerId = self.patientProviderIdField.text;
+    [Singleton sharedData].currentPatient.Relationship = self.relationshipField.text;
+    [Singleton sharedData].currentPatient.FirstName = self.guardianFirstNameField.text;
+    [Singleton sharedData].currentPatient.LastName = self.guardianLastNameField.text;
+    [Singleton sharedData].currentPatient.phone = self.guardianPhoneField.text;
+    [Singleton sharedData].currentPatient.city = self.guardianCityField.text;
+    [Singleton sharedData].currentPatient.state = self.guardianStateField.text;
+    [Singleton sharedData].currentPatient.zip = self.guardianZipField.text;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     self.originalFrame = self.view.frame;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
     [self configureModifyButtonWithPatientDict:nil];
 }
 
@@ -194,11 +199,15 @@
 {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"currentPatient"])
     {
-        if (!self.currentPatient)
+        if (![Singleton sharedData].currentPatient)
         {
+            //NSLog(@"NO PATIENT");
             if (dict)
             {
-                self.currentPatient = [[patient alloc] initWithDictionary:dict];
+                patient *newPatient = [[patient alloc] initWithDictionary:dict];
+                [Singleton sharedData].currentPatient = newPatient;
+                [self setCurrentPatient:[Singleton sharedData].currentPatient];
+                //NSLog(@"patient = %@",[[Singleton sharedData].currentPatient description]);
             }
             else
             {
@@ -212,9 +221,10 @@
     else
     {
         self.modifyButton.enabled = NO;
-        self.currentPatient = nil;
+        [Singleton sharedData].currentPatient = nil;
         self.navigationItem.leftBarButtonItem = nil;
         self.navigationItem.rightBarButtonItem = self.loginButton;
+        [self setCurrentPatient:[Singleton sharedData].currentPatient];
     }
         
 }
@@ -256,11 +266,10 @@
         self.guardianCityField.text = currentPatient.city;
         self.guardianStateField.text = currentPatient.state;
         self.guardianZipField.text = currentPatient.zip;
-        
     }
     else
     {
-        NSLog(@"nothing");
+        //NSLog(@"nothing");
         self.patientIdLabel.text = @"patient ID: ";
         self.guardianNoLabel.text = @"guardian No: ";
         for (UIView *view in self.view.subviews)
@@ -284,7 +293,8 @@
 
 //modify button method
 - (IBAction)modifyPatientData:(id)sender {
-    [[connectionManager sharedManager] updatePatientInfoWithPatient:self.currentPatient inBackgroundWithBlock:^(BOOL succeed, NSString *error) {
+    NSLog(@"%@",[Singleton sharedData].currentPatient);
+    [[connectionManager sharedManager] updatePatientInfoWithPatient:[Singleton sharedData].currentPatient inBackgroundWithBlock:^(BOOL succeed, NSString *error) {
        if (succeed)
        {
            UIAlertView *success = [[UIAlertView alloc] initWithTitle:@"Success" message:@"Successfully updated patient info" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];

@@ -36,7 +36,7 @@ NSString * const GuardianZipKey = @"zip";
 
 @implementation patient
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict
+- (id)initWithDictionary:(NSDictionary *)dict
 {
     self = [super init];
     if (self)

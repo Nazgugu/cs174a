@@ -53,6 +53,6 @@ extern NSString * const GuardianZipKey;
 @property (strong, nonatomic) NSString *state;
 @property (strong, nonatomic) NSString *zip;
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict;
+- (id)initWithDictionary:(NSDictionary *)dict;
 
 @end
