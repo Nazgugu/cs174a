@@ -92,7 +92,7 @@
             {
                 if ([[patientResponse objectForKey:@"result"] isKindOfClass:[NSDictionary class]])
                 {
-                    NSLog(@"result = %@",[patientResponse objectForKey:@"result"]);
+                    //NSLog(@"result = %@",[patientResponse objectForKey:@"result"]);
                     block([patientResponse objectForKey:@"result"],@"success");
                     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                     [ProgressHUD dismiss];

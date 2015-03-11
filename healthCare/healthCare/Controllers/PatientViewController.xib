@@ -162,12 +162,11 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yMN-MN-cxy">
-                    <rect key="frame" x="10" y="236" width="170" height="21"/>
+                    <rect key="frame" x="10" y="236" width="302" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="cmC-Jd-5bE"/>
-                        <constraint firstAttribute="width" constant="170" id="lur-Ti-sQv"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -402,6 +401,7 @@
                 <constraint firstItem="Qke-7J-aju" firstAttribute="leading" secondItem="ROE-OR-SUg" secondAttribute="trailing" constant="8" id="iXv-fg-SdW"/>
                 <constraint firstItem="FXG-yQ-cp6" firstAttribute="leading" secondItem="oOu-eH-4pG" secondAttribute="trailing" constant="8" id="icO-a6-Ges"/>
                 <constraint firstItem="Ec7-Cl-8Ml" firstAttribute="leading" secondItem="FUZ-dK-B02" secondAttribute="trailing" constant="15" id="jaZ-BL-QNp"/>
+                <constraint firstAttribute="trailing" secondItem="yMN-MN-cxy" secondAttribute="trailing" constant="8" id="kKj-iG-Mdz"/>
                 <constraint firstItem="ROE-OR-SUg" firstAttribute="top" secondItem="7ac-05-0N3" secondAttribute="bottom" constant="15" id="kOb-vI-1xR"/>
                 <constraint firstItem="qGn-3h-cxK" firstAttribute="top" secondItem="SQk-2S-EFj" secondAttribute="bottom" constant="11" id="kxn-kk-7Gl"/>
                 <constraint firstItem="kNh-BA-rk3" firstAttribute="leading" secondItem="utl-B5-L9G" secondAttribute="trailing" constant="28" id="loc-Pz-XE2"/>

@@ -43,6 +43,8 @@
 
 @property (strong, nonatomic) patient *currentPatient;
 
+@property (strong, nonatomic) NSString *patientId;
+
 @end
 
 @implementation PatientViewController
@@ -83,7 +85,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self configureModifyButton];
+    [self configureModifyButtonWithPatientDict:nil];
 }
 
 - (void)closeKeyBoard
@@ -91,11 +93,18 @@
     [self.view endEditing:YES];
 }
 
-- (void)configureModifyButton
+- (void)configureModifyButtonWithPatientDict:(NSDictionary *)dict
 {
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"currentPatient"])
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"currentPatient"])
     {
-        self.currentPatient = [[patient alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"currentPatient"]];
+        if (dict)
+        {
+            self.currentPatient = [[patient alloc] initWithDictionary:dict];
+        }
+        else
+        {
+            [self logInWithId:[[NSUserDefaults standardUserDefaults] objectForKey:@"patientId"]];
+        }
         self.modifyButton.enabled = YES;
         self.navigationItem.rightBarButtonItem = nil;
         self.navigationItem.leftBarButtonItem = self.logoutButton;
@@ -128,7 +137,7 @@
             }
         }
         
-        self.patientProviderIdField.text = [NSString stringWithFormat:@"patient ID: %@",currentPatient.patientId];
+        self.patientIdLabel.text = [NSString stringWithFormat:@"patient ID: %@",currentPatient.patientId];
         self.guardianNoLabel.text = [NSString stringWithFormat:@"guardian No: %@",currentPatient.GuardianNo];
         self.creationDateLabel.text = [NSString stringWithFormat:@"%@",currentPatient.xmlHealthCreationTime];
         self.patientFamilyNameField.text = currentPatient.FamilyName;
@@ -138,7 +147,7 @@
         self.patientBirthDayField.text = currentPatient.BirthTime;
         self.patientProviderIdField.text = currentPatient.providerId;
         //guardian info
-        self.guardianNoLabel.text = currentPatient.GuardianNo;
+        //self.guardianNoLabel.text = currentPatient.GuardianNo;
         self.guardianFirstNameField.text = currentPatient.FirstName;
         self.guardianLastNameField.text = currentPatient.LastName;
         self.guardianPhoneField.text = currentPatient.phone;
@@ -159,13 +168,13 @@
             if ([view isKindOfClass:[InsetTextField class]])
             {
                 InsetTextField *field = (InsetTextField *)view;
-                field.text = nil;
+                field.text = @"";
                 field.enabled = NO;
             }
             if ([view isKindOfClass:[UITextView class]])
             {
                 UITextView *textView = (UITextView *)view;
-                textView.text = nil;
+                textView.text = @"";
                 textView.editable = NO;
             }
         }
@@ -194,6 +203,11 @@
 
 - (void)patientLogout
 {
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"currentPatient"];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"patientId"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self configureModifyButtonWithPatientDict:nil];
+
 }
 
 #pragma mark - AlertViewDelegate
@@ -207,27 +221,36 @@
         }
         else
         {
-            [[connectionManager sharedManager] fetchInBackgroundWithPatientId:[alertView textFieldAtIndex:0].text andBlock:^(id Object, NSString *error) {
-               if (Object)
-               {
-                   if ([Object isKindOfClass:[NSDictionary class]])
-                   {
-                       NSDictionary *dict = Object;
-                       [[NSUserDefaults standardUserDefaults] setObject:dict forKey:@"currentPatient"];
-                       [[NSUserDefaults standardUserDefaults] synchronize];
-                       [self configureModifyButton];
-                   }
-               }
-                else
-                {
-                    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"currentPatient"];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                    [self showErrorAlert:error];
-                    [self configureModifyButton];
-                }
-            }];
+            self.patientId = [alertView textFieldAtIndex:0].text;
+            [self logInWithId:self.patientId];
         }
     }
+}
+
+- (void)logInWithId:(NSString *)patientId
+{
+    [[connectionManager sharedManager] fetchInBackgroundWithPatientId:patientId andBlock:^(id Object, NSString *error) {
+        if (Object)
+        {
+            if ([Object isKindOfClass:[NSDictionary class]])
+            {
+                
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"currentPatient"];
+                [[NSUserDefaults standardUserDefaults] setObject:self.patientId forKey:@"patientId"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [self configureModifyButtonWithPatientDict:Object];
+            }
+        }
+        else
+        {
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"currentPatient"];
+            [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"patientId"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self showErrorAlert:error];
+            [self configureModifyButtonWithPatientDict:nil];
+        }
+    }];
+
 }
 
 - (void)showErrorAlert:(NSString *)error
