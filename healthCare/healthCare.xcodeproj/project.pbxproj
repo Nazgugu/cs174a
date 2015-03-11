@@ -25,6 +25,7 @@
 		AE84A6731AAD6D5A00B8F945 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE84A6721AAD6D5A00B8F945 /* LoginViewController.m */; };
 		AE84A6761AAD6DAC00B8F945 /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE84A6751AAD6DAC00B8F945 /* TabBarViewController.m */; };
 		AE84A67C1AAE254300B8F945 /* InsetTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = AE84A67B1AAE254300B8F945 /* InsetTextField.m */; };
+		AEF985011AB015C8000FF661 /* patient.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF985001AB015C8000FF661 /* patient.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,8 @@
 		AE84A6751AAD6DAC00B8F945 /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabBarViewController.m; path = Base/TabBarViewController.m; sourceTree = "<group>"; };
 		AE84A67A1AAE254300B8F945 /* InsetTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InsetTextField.h; path = views/InsetTextField.h; sourceTree = "<group>"; };
 		AE84A67B1AAE254300B8F945 /* InsetTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InsetTextField.m; path = views/InsetTextField.m; sourceTree = "<group>"; };
+		AEF984FF1AB015C8000FF661 /* patient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = patient.h; path = model/patient.h; sourceTree = "<group>"; };
+		AEF985001AB015C8000FF661 /* patient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = patient.m; path = model/patient.m; sourceTree = "<group>"; };
 		C72C27E3013EA1C1EB543FCA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,6 +117,8 @@
 			children = (
 				AE35EA051AAF835700453E02 /* connectionManager.h */,
 				AE35EA061AAF835700453E02 /* connectionManager.m */,
+				AEF984FF1AB015C8000FF661 /* patient.h */,
+				AEF985001AB015C8000FF661 /* patient.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -375,6 +380,7 @@
 			files = (
 				AE84A6421AAD6CC600B8F945 /* AppDelegate.m in Sources */,
 				AE84A6651AAD6D2200B8F945 /* PatientViewController.m in Sources */,
+				AEF985011AB015C8000FF661 /* patient.m in Sources */,
 				AE35EA0E1AAFDA3C00453E02 /* ProgressHUD.m in Sources */,
 				AE84A6761AAD6DAC00B8F945 /* TabBarViewController.m in Sources */,
 				AE84A6731AAD6D5A00B8F945 /* LoginViewController.m in Sources */,

@@ -8,8 +8,14 @@
 
 #import "PatientViewController.h"
 #import "LoginViewController.h"
+#import "InsetTextField.h"
 
 @interface PatientViewController () <UITabBarControllerDelegate, UIAlertViewDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *patientIdLabel;
+@property (weak, nonatomic) IBOutlet InsetTextField *patientGivenNameField;
+@property (weak, nonatomic) IBOutlet InsetTextField *patientFamilyNameField;
+@property (weak, nonatomic) IBOutlet InsetTextField *patientSuffixField;
+@property (weak, nonatomic) IBOutlet InsetTextField *patientGenderField;
 
 @end
 
