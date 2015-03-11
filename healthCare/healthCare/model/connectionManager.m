@@ -76,7 +76,7 @@
     _urlString = [NSString stringWithFormat:@"http://%@:8888/patientLogin.php",[[NSUserDefaults standardUserDefaults] objectForKey:@"serverKey"]];
     //NSLog(@"url = %@",_urlString);
     NSURL *url = [NSURL URLWithString:_urlString];
-    NSMutableURLRequest *requst = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:2];
+    NSMutableURLRequest *requst = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:5];
     [requst setHTTPMethod:@"POST"];
     [requst setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
     NSString *postingString = [NSString stringWithFormat:@"patientId=%@",patientId];
@@ -124,7 +124,7 @@
     _urlString = [NSString stringWithFormat:@"http://%@:8888/authorLogin.php",[[NSUserDefaults standardUserDefaults] objectForKey:@"serverKey"]];
     //NSLog(@"url = %@",_urlString);
     NSURL *url = [NSURL URLWithString:_urlString];
-    NSMutableURLRequest *requst = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:2];
+    NSMutableURLRequest *requst = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:5];
     [requst setHTTPMethod:@"POST"];
     [requst setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
     NSString *postingString = [NSString stringWithFormat:@"AuthorId=%@",doctorId];

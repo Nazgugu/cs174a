@@ -70,6 +70,9 @@
 
 - (void)doctorLogout
 {
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"currentDoctor"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self configureView];
 }
 
 #pragma mark - AlertViewDelegate

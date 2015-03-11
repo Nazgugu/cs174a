@@ -36,6 +36,9 @@
     LoginViewController *login = [[LoginViewController alloc] init];
     [self presentViewController:login animated:YES completion:^{
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"loginSuccess"];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"currentPatient"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"patientId"];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"currentDoctor"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }];
 }
