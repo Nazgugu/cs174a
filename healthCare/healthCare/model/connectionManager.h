@@ -21,5 +21,9 @@ typedef void (^objectBlock)(id Object, NSString *error);
 //fetch single patient
 - (void)fetchInBackgroundWithPatientId:(NSString *)patientId andBlock:(objectBlock)block;
 
+//update patient info
 - (void)updatePatientInfoWithPatient:(patient *)patient inBackgroundWithBlock:(boolBlock)block;
+
+//login as doctor
+- (void)loginInBackgroundWithDoctorId:(NSString *)doctorId andBlock:(boolBlock)block;
 @end
