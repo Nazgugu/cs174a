@@ -312,9 +312,8 @@
         {
             if ([Object isKindOfClass:[NSDictionary class]])
             {
-                
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"currentPatient"];
-                [[NSUserDefaults standardUserDefaults] setObject:self.patientId forKey:@"patientId"];
+                [[NSUserDefaults standardUserDefaults] setObject:[Object objectForKey:patientIdKey] forKey:patientIdKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [self configureModifyButtonWithPatientDict:Object];
             }
