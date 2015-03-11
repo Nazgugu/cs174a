@@ -13,6 +13,7 @@
 #import "PatientViewController.h"
 #import "DoctorViewController.h"
 #import "AdminViewController.h"
+#import "settingViewViewController.h"
 
 @interface LoginViewController () <UITextFieldDelegate>
 @property (strong, nonatomic) InsetTextField *nameText;
@@ -143,7 +144,10 @@
     AdminViewController *adminController = [[AdminViewController alloc] init];
     UINavigationController  *nav3 = [[UINavigationController alloc] initWithRootViewController:adminController];
     nav3.tabBarItem.title = @"Administrator";
-    mainView.viewControllers = @[nav1,nav2,nav3];
+    settingViewViewController *settingControll = [[settingViewViewController alloc] init];
+    UINavigationController *nav4 = [[UINavigationController alloc] initWithRootViewController:settingControll];
+    nav4.tabBarController.title = @"Setting";
+    mainView.viewControllers = @[nav1,nav2,nav3,nav4];
     mainView.selectedIndex = 0;
 
     [self presentViewController:mainView animated:YES completion:^{

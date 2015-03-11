@@ -12,6 +12,7 @@
 #import "PatientViewController.h"
 #import "DoctorViewController.h"
 #import "AdminViewController.h"
+#import "settingViewViewController.h"
 
 
 @interface AppDelegate ()
@@ -51,14 +52,17 @@
     TabBarViewController *tab = [[TabBarViewController alloc] init];
     PatientViewController *patientController  = [[PatientViewController alloc] init];
     UINavigationController  *nav1 = [[UINavigationController alloc] initWithRootViewController:patientController];
-    nav1.tabBarItem.title = @"patient";
+    nav1.tabBarItem.title = @"Patient";
     DoctorViewController *doctorController = [[DoctorViewController alloc] init];
     UINavigationController  *nav2 = [[UINavigationController alloc] initWithRootViewController:doctorController];
     nav2.tabBarItem.title = @"Doctor";
     AdminViewController *adminController = [[AdminViewController alloc] init];
     UINavigationController  *nav3 = [[UINavigationController alloc] initWithRootViewController:adminController];
     nav3.tabBarItem.title = @"Administrator";
-    tab.viewControllers = @[nav1,nav2,nav3];
+    settingViewViewController *settingControll = [[settingViewViewController alloc] init];
+    UINavigationController *nav4 = [[UINavigationController alloc] initWithRootViewController:settingControll];
+    nav4.tabBarController.title = @"Setting";
+    tab.viewControllers = @[nav1,nav2,nav3,nav4];
     self.window.rootViewController = tab;
     [self.window makeKeyAndVisible];
 }

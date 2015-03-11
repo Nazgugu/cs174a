@@ -31,26 +31,6 @@ NSString * const GuardianZipKey = @"zip";
 
 
 @interface patient()
-//Patient
-@property (strong, nonatomic) NSString *patientId;
-@property (strong, nonatomic) NSString *GivenName;
-@property (strong, nonatomic) NSString *FamilyName;
-@property (strong, nonatomic) NSString *Suffix;
-@property (strong, nonatomic) NSString *Gender;
-@property (strong, nonatomic) NSString *BirthTime;
-@property (strong, nonatomic) NSString *providerId;
-@property (strong, nonatomic) NSString *xmlHealthCreationTime;
-
-//GuardianInfo
-@property (strong, nonatomic) NSString *GuardianNo;
-@property (strong, nonatomic) NSString *Relationship;
-@property (strong, nonatomic) NSString *FirstName;
-@property (strong, nonatomic) NSString *LastName;
-@property (strong, nonatomic) NSString *phone;
-@property (strong, nonatomic) NSString *address;
-@property (strong, nonatomic) NSString *city;
-@property (strong, nonatomic) NSString *state;
-@property (strong, nonatomic) NSString *zip;
 
 @end
 
