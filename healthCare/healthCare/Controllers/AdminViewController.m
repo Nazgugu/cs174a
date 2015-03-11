@@ -9,7 +9,7 @@
 #import "AdminViewController.h"
 #import "LoginViewController.h"
 
-@interface AdminViewController () <UITabBarControllerDelegate>
+@interface AdminViewController () <UITabBarControllerDelegate,UIAlertViewDelegate>
 
 @end
 
@@ -21,6 +21,9 @@
     self.title = @"Administrator";
     UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
     self.navigationItem.rightBarButtonItem = logout;
+    self.navigationItem.rightBarButtonItem = logout;
+    UIBarButtonItem *adminLogin = [[UIBarButtonItem alloc] initWithTitle:@"patientLogin" style:UIBarButtonItemStylePlain target:self action:@selector(adminLogin)];
+    self.navigationItem.leftBarButtonItem = adminLogin;
     self.tabBarController.delegate = self;
 }
 
@@ -30,6 +33,28 @@
     [self presentViewController:login animated:YES completion:^{
         
     }];
+}
+
+- (void)adminLogin
+{
+    UIAlertView *loginAlert = [[UIAlertView alloc] init];
+    loginAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    loginAlert.cancelButtonIndex = 1;
+    loginAlert.title = @"Login As Admin";
+    loginAlert.message = @"Please enter adminId";
+    [loginAlert addButtonWithTitle:@"Confirm"];
+    [loginAlert addButtonWithTitle:@"Cancel"];
+    loginAlert.delegate = self;
+    [loginAlert show];
+}
+
+#pragma mark - AlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        NSLog(@"I am gonna login as Doctor");
+    }
 }
 
 - (void)didReceiveMemoryWarning {

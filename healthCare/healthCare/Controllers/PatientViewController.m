@@ -9,7 +9,7 @@
 #import "PatientViewController.h"
 #import "LoginViewController.h"
 
-@interface PatientViewController () <UITabBarControllerDelegate>
+@interface PatientViewController () <UITabBarControllerDelegate, UIAlertViewDelegate>
 
 @end
 
@@ -21,7 +21,22 @@
     self.title = @"Patient";
     UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
     self.navigationItem.rightBarButtonItem = logout;
+    UIBarButtonItem *patientLogin = [[UIBarButtonItem alloc] initWithTitle:@"patientLogin" style:UIBarButtonItemStylePlain target:self action:@selector(patientLogin)];
+    self.navigationItem.leftBarButtonItem = patientLogin;
     self.tabBarController.delegate = self;
+}
+
+- (void)patientLogin
+{
+    UIAlertView *loginAlert = [[UIAlertView alloc] init];
+    loginAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    loginAlert.cancelButtonIndex = 1;
+    loginAlert.title = @"Login As Patient";
+    loginAlert.message = @"Please enter patientId";
+    [loginAlert addButtonWithTitle:@"Confirm"];
+    [loginAlert addButtonWithTitle:@"Cancel"];
+    loginAlert.delegate = self;
+    [loginAlert show];
 }
 
 - (void)logout
@@ -30,6 +45,15 @@
     [self presentViewController:login animated:YES completion:^{
         
     }];
+}
+
+#pragma mark - AlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        NSLog(@"I am gonna login as Patient");
+    }
 }
 
 - (void)didReceiveMemoryWarning {
