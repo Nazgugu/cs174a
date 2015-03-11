@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		86865E1A798A5C5E3976DD28 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24DA78E8DD6FFC76B383119D /* libPods.a */; };
 		AE35EA071AAF835700453E02 /* connectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AE35EA061AAF835700453E02 /* connectionManager.m */; };
+		AE35EA0D1AAFDA3C00453E02 /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE35EA0A1AAFDA3C00453E02 /* ProgressHUD.bundle */; };
+		AE35EA0E1AAFDA3C00453E02 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = AE35EA0C1AAFDA3C00453E02 /* ProgressHUD.m */; };
 		AE84A63F1AAD6CC600B8F945 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AE84A63E1AAD6CC600B8F945 /* main.m */; };
 		AE84A6421AAD6CC600B8F945 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AE84A6411AAD6CC600B8F945 /* AppDelegate.m */; };
 		AE84A64A1AAD6CC600B8F945 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE84A6491AAD6CC600B8F945 /* Images.xcassets */; };
@@ -40,6 +42,9 @@
 		44A773D01E0AB0224163ECF5 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		AE35EA051AAF835700453E02 /* connectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = connectionManager.h; path = model/connectionManager.h; sourceTree = "<group>"; };
 		AE35EA061AAF835700453E02 /* connectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = connectionManager.m; path = model/connectionManager.m; sourceTree = "<group>"; };
+		AE35EA0A1AAFDA3C00453E02 /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
+		AE35EA0B1AAFDA3C00453E02 /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
+		AE35EA0C1AAFDA3C00453E02 /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
 		AE84A6391AAD6CC600B8F945 /* healthCare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = healthCare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE84A63D1AAD6CC600B8F945 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AE84A63E1AAD6CC600B8F945 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -113,6 +118,24 @@
 			name = model;
 			sourceTree = "<group>";
 		};
+		AE35EA081AAFDA2E00453E02 /* vendor */ = {
+			isa = PBXGroup;
+			children = (
+				AE35EA091AAFDA3C00453E02 /* ProgressHUD */,
+			);
+			name = vendor;
+			sourceTree = "<group>";
+		};
+		AE35EA091AAFDA3C00453E02 /* ProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				AE35EA0A1AAFDA3C00453E02 /* ProgressHUD.bundle */,
+				AE35EA0B1AAFDA3C00453E02 /* ProgressHUD.h */,
+				AE35EA0C1AAFDA3C00453E02 /* ProgressHUD.m */,
+			);
+			path = ProgressHUD;
+			sourceTree = "<group>";
+		};
 		AE84A6301AAD6CC600B8F945 = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +161,7 @@
 			children = (
 				AE84A6401AAD6CC600B8F945 /* AppDelegate.h */,
 				AE84A6411AAD6CC600B8F945 /* AppDelegate.m */,
+				AE35EA081AAFDA2E00453E02 /* vendor */,
 				AE84A67D1AAE255000B8F945 /* Textfield */,
 				AE84A6781AAD6DCC00B8F945 /* Controllers */,
 				AE84A6771AAD6DB400B8F945 /* Base */,
@@ -295,6 +319,7 @@
 			files = (
 				AE84A64D1AAD6CC600B8F945 /* LaunchScreen.xib in Resources */,
 				AE84A6661AAD6D2200B8F945 /* PatientViewController.xib in Resources */,
+				AE35EA0D1AAFDA3C00453E02 /* ProgressHUD.bundle in Resources */,
 				AE84A64A1AAD6CC600B8F945 /* Images.xcassets in Resources */,
 				AE84A66B1AAD6D3200B8F945 /* DoctorViewController.xib in Resources */,
 				AE84A6701AAD6D4500B8F945 /* AdminViewController.xib in Resources */,
@@ -350,6 +375,7 @@
 			files = (
 				AE84A6421AAD6CC600B8F945 /* AppDelegate.m in Sources */,
 				AE84A6651AAD6D2200B8F945 /* PatientViewController.m in Sources */,
+				AE35EA0E1AAFDA3C00453E02 /* ProgressHUD.m in Sources */,
 				AE84A6761AAD6DAC00B8F945 /* TabBarViewController.m in Sources */,
 				AE84A6731AAD6D5A00B8F945 /* LoginViewController.m in Sources */,
 				AE84A66F1AAD6D4500B8F945 /* AdminViewController.m in Sources */,

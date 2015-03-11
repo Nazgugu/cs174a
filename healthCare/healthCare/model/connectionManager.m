@@ -8,6 +8,7 @@
 
 #import "connectionManager.h"
 #import <AFNetworking/AFNetworking.h>
+#import "ProgressHUD.h"
 
 @interface connectionManager()
 
@@ -29,12 +30,13 @@
 
 - (void)connectWithIpAddress:(NSString *)ip andUserName:(NSString *)userName andPassword:(NSString *)password inBackgroundWithBlock:(boolBlock)block
 {
+    [ProgressHUD show:@"Connecting" Interaction:NO];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [[AFHTTPRequestOperationManager manager].operationQueue cancelAllOperations];
-    [AFHTTPRequestOperationManager manager].requestSerializer.timeoutInterval = 5;
     _urlString = [NSString stringWithFormat:@"http://%@:8888/connectServer.php?username=%@&password=%@",ip,userName,password];
     NSURL *url = [NSURL URLWithString:_urlString];
-    NSURLRequest *requst = [NSURLRequest requestWithURL:url];
+    NSURLRequest *requst = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:2];
+    
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:requst];
     //operation.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -47,17 +49,20 @@
             {
                 block(YES,@"no error");
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [ProgressHUD dismiss];
             }
             else
             {
                 block(NO,@"netWork failure");
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [ProgressHUD dismiss];
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",[error description]);
         block(NO,@"Network Error");
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [ProgressHUD dismiss];
     }];
     [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
 }
