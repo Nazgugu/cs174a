@@ -7,7 +7,6 @@
 //
 
 #import "AdminViewController.h"
-#import "LoginViewController.h"
 
 @interface AdminViewController () <UITabBarControllerDelegate,UIAlertViewDelegate>
 
@@ -19,20 +18,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"Administrator";
-    UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
+    UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"adminLogout" style:UIBarButtonItemStylePlain target:self action:@selector(adminLogout)];
     self.navigationItem.rightBarButtonItem = logout;
     self.navigationItem.rightBarButtonItem = logout;
-    UIBarButtonItem *adminLogin = [[UIBarButtonItem alloc] initWithTitle:@"patientLogin" style:UIBarButtonItemStylePlain target:self action:@selector(adminLogin)];
+    UIBarButtonItem *adminLogin = [[UIBarButtonItem alloc] initWithTitle:@"adminLogin" style:UIBarButtonItemStylePlain target:self action:@selector(adminLogin)];
     self.navigationItem.leftBarButtonItem = adminLogin;
     self.tabBarController.delegate = self;
 }
 
-- (void)logout
+- (void)adminLogout
 {
-    LoginViewController *login = [[LoginViewController alloc] init];
-    [self presentViewController:login animated:YES completion:^{
-        
-    }];
 }
 
 - (void)adminLogin

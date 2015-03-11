@@ -18,9 +18,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.title = @"setting";
+    self.view.backgroundColor = [UIColor whiteColor];
     UIButton *logoutButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 50, self.view.frame.size.height/2 - 25, 100, 25)];
     [logoutButton setTitle:@"logout" forState:UIControlStateNormal];
     [logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+    logoutButton.layer.borderWidth = 1.0f;
+    logoutButton.layer.borderColor = [UIColor grayColor].CGColor;
+    logoutButton.layer.cornerRadius = 5.0f;
+    logoutButton.layer.masksToBounds = YES;
     [self.view addSubview:logoutButton];
 }
 

@@ -7,11 +7,16 @@
 //
 
 #import "PatientViewController.h"
-#import "LoginViewController.h"
 #import "InsetTextField.h"
 #import "patient.h"
+#import "connectionManager.h"
 
 @interface PatientViewController () <UITabBarControllerDelegate, UIAlertViewDelegate>
+
+@property (strong, nonatomic) UIBarButtonItem *loginButton;
+
+@property (strong, nonatomic) UIBarButtonItem *logoutButton;
+
 
 //patient
 @property (weak, nonatomic) IBOutlet UILabel *patientIdLabel;
@@ -41,6 +46,69 @@
 @end
 
 @implementation PatientViewController
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    self.title = @"Patient";
+    self.logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"patientLogout" style:UIBarButtonItemStylePlain target:self action:@selector(patientLogout)];
+    self.navigationItem.leftBarButtonItem= self.logoutButton;
+    self.loginButton = [[UIBarButtonItem alloc] initWithTitle:@"patientLogin" style:UIBarButtonItemStylePlain target:self action:@selector(patientLogin)];
+    self.navigationItem.rightBarButtonItem = self.loginButton;
+    self.tabBarController.delegate = self;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeKeyBoard)];
+    tap.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:tap];
+    
+    //initialization
+    self.patientIdLabel.text = @"patient ID: ";
+    self.guardianNoLabel.text = @"guardian No: ";
+    self.creationDateLabel.text = @"creat at: ";
+    self.guardianAddressField.layer.borderWidth = 1.0f;
+    self.guardianAddressField.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.guardianAddressField.layer.masksToBounds = YES;
+    
+    [self.modifyButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
+    self.modifyButton.layer.borderWidth = 1.0f;
+    self.modifyButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.modifyButton.layer.cornerRadius = 5.0f;
+    self.modifyButton.layer.masksToBounds = YES;
+    
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self configureModifyButton];
+}
+
+- (void)closeKeyBoard
+{
+    [self.view endEditing:YES];
+}
+
+- (void)configureModifyButton
+{
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"currentPatient"])
+    {
+        self.currentPatient = [[patient alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"currentPatient"]];
+        self.modifyButton.enabled = YES;
+        self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.leftBarButtonItem = self.logoutButton;
+    }
+    else
+    {
+        self.modifyButton.enabled = NO;
+        self.currentPatient = nil;
+        self.navigationItem.leftBarButtonItem = nil;
+        self.navigationItem.rightBarButtonItem = self.loginButton;
+    }
+        
+}
 
 - (void)setCurrentPatient:(patient *)currentPatient
 {
@@ -105,64 +173,6 @@
 }
 
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    
-    self.title = @"Patient";
-    UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
-    self.navigationItem.rightBarButtonItem = logout;
-    UIBarButtonItem *patientLogin = [[UIBarButtonItem alloc] initWithTitle:@"patientLogin" style:UIBarButtonItemStylePlain target:self action:@selector(patientLogin)];
-    self.navigationItem.leftBarButtonItem = patientLogin;
-    self.tabBarController.delegate = self;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeKeyBoard)];
-    tap.numberOfTapsRequired = 1;
-    [self.view addGestureRecognizer:tap];
-    
-    //initialization
-    self.patientIdLabel.text = @"patient ID: ";
-    self.guardianNoLabel.text = @"guardian No: ";
-    self.creationDateLabel.text = @"creat at: ";
-    self.guardianAddressField.layer.borderWidth = 1.0f;
-    self.guardianAddressField.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    self.guardianAddressField.layer.masksToBounds = YES;
-    
-    [self.modifyButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
-    self.modifyButton.layer.borderWidth = 1.0f;
-    self.modifyButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    self.modifyButton.layer.cornerRadius = 5.0f;
-    self.modifyButton.layer.masksToBounds = YES;
-    
-}
-
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self configureModifyButton];
-}
-
-- (void)closeKeyBoard
-{
-    [self.view endEditing:YES];
-}
-
-- (void)configureModifyButton
-{
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"currentPatient"])
-    {
-        self.currentPatient = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentPatient"];
-        self.modifyButton.enabled = YES;
-    }
-    else
-    {
-        self.modifyButton.enabled = NO;
-        self.currentPatient = nil;
-    }
-        
-}
-
 //modify button method
 - (IBAction)modifyPatientData:(id)sender {
 }
@@ -182,7 +192,7 @@
 
 
 
-- (void)logout
+- (void)patientLogout
 {
 }
 
@@ -191,8 +201,39 @@
 {
     if (buttonIndex == 0)
     {
-        NSLog(@"I am gonna login as Patient");
+        if (![alertView textFieldAtIndex:0].text || [[alertView textFieldAtIndex:0].text isEqualToString:@""])
+        {
+            [self patientLogin];
+        }
+        else
+        {
+            [[connectionManager sharedManager] fetchInBackgroundWithPatientId:[alertView textFieldAtIndex:0].text andBlock:^(id Object, NSString *error) {
+               if (Object)
+               {
+                   if ([Object isKindOfClass:[NSDictionary class]])
+                   {
+                       NSDictionary *dict = Object;
+                       [[NSUserDefaults standardUserDefaults] setObject:dict forKey:@"currentPatient"];
+                       [[NSUserDefaults standardUserDefaults] synchronize];
+                       [self configureModifyButton];
+                   }
+               }
+                else
+                {
+                    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"currentPatient"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    [self showErrorAlert:error];
+                    [self configureModifyButton];
+                }
+            }];
+        }
     }
+}
+
+- (void)showErrorAlert:(NSString *)error
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
 }
 
 - (void)didReceiveMemoryWarning {

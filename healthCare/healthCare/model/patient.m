@@ -43,6 +43,7 @@ NSString * const GuardianZipKey = @"zip";
     {
         //Patient
         self.patientId = [dict objectForKey:patientIdKey];
+        NSLog(@"patient id = %@",[dict objectForKey:patientIdKey]);
         self.GivenName = [dict objectForKey:patientGivenNameKey];
         self.FamilyName = [dict objectForKey:patientFamilyNameKey];
         self.Suffix = [dict objectForKey:patientSuffixKey];

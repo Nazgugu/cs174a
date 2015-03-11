@@ -125,11 +125,16 @@
             [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"serverKey"];
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"loginSuccess"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            UIAlertView *alert3 = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Login error" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert3 show];
+            [self showErrorAlert:error];
             return;
         }
     }];
+}
+
+- (void)showErrorAlert:(NSString *)error
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
 }
 
 - (void)goToMainView
@@ -146,7 +151,7 @@
     nav3.tabBarItem.title = @"Administrator";
     settingViewViewController *settingControll = [[settingViewViewController alloc] init];
     UINavigationController *nav4 = [[UINavigationController alloc] initWithRootViewController:settingControll];
-    nav4.tabBarController.title = @"Setting";
+    nav4.tabBarItem.title = @"Setting";
     mainView.viewControllers = @[nav1,nav2,nav3,nav4];
     mainView.selectedIndex = 0;
 

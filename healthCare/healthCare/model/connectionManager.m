@@ -9,6 +9,7 @@
 #import "connectionManager.h"
 #import <AFNetworking/AFNetworking.h>
 #import "ProgressHUD.h"
+#import "patient.h"
 
 @interface connectionManager()
 
@@ -61,6 +62,53 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",[error description]);
         block(NO,@"Network Error");
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [ProgressHUD dismiss];
+    }];
+    [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
+}
+
+- (void)fetchInBackgroundWithPatientId:(NSString *)patientId andBlock:(objectBlock)block
+{
+    [ProgressHUD show:@"Fetching" Interaction:NO];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [[AFHTTPRequestOperationManager manager].operationQueue cancelAllOperations];
+    _urlString = [NSString stringWithFormat:@"http://%@:8888/patientLogin.php",[[NSUserDefaults standardUserDefaults] objectForKey:@"serverKey"]];
+    NSLog(@"url = %@",_urlString);
+    NSURL *url = [NSURL URLWithString:_urlString];
+    NSMutableURLRequest *requst = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:2];
+    [requst setHTTPMethod:@"POST"];
+    [requst setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
+    NSString *postingString = [NSString stringWithFormat:@"patientId=%@",patientId];
+    [requst setHTTPBody:[postingString dataUsingEncoding:NSUTF8StringEncoding]];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:requst];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //NSLog(@"%@",responseObject);
+        if ([responseObject isKindOfClass:[NSDictionary class]])
+        {
+            NSDictionary *patientResponse = responseObject;
+            if ([[patientResponse objectForKey:@"success"] boolValue])
+            {
+                if ([[patientResponse objectForKey:@"result"] isKindOfClass:[NSDictionary class]])
+                {
+                    NSLog(@"result = %@",[patientResponse objectForKey:@"result"]);
+                    block([patientResponse objectForKey:@"result"],@"success");
+                    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                    [ProgressHUD dismiss];
+                }
+            }
+            else
+            {
+                block(nil,@"no such patient");
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [ProgressHUD dismiss];
+            }
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"not good");
+        NSLog(@"%@",[error description]);
+        block(nil,@"Network Error");
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [ProgressHUD dismiss];
     }];

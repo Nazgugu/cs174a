@@ -7,7 +7,6 @@
 //
 
 #import "DoctorViewController.h"
-#import "LoginViewController.h"
 
 @interface DoctorViewController () <UITabBarControllerDelegate, UIAlertViewDelegate>
 
@@ -19,7 +18,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"Doctor";
-    UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
+    UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"doctorLogout" style:UIBarButtonItemStylePlain target:self action:@selector(doctorLogout)];
     self.navigationItem.rightBarButtonItem = logout;
     UIBarButtonItem *doctorLogin = [[UIBarButtonItem alloc] initWithTitle:@"patientLogin" style:UIBarButtonItemStylePlain target:self action:@selector(doctorLogin)];
     self.navigationItem.leftBarButtonItem = doctorLogin;
@@ -39,12 +38,8 @@
     [loginAlert show];
 }
 
-- (void)logout
+- (void)doctorLogout
 {
-    LoginViewController *login = [[LoginViewController alloc] init];
-    [self presentViewController:login animated:YES completion:^{
-        
-    }];
 }
 
 #pragma mark - AlertViewDelegate

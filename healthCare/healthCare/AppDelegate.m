@@ -61,7 +61,7 @@
     nav3.tabBarItem.title = @"Administrator";
     settingViewViewController *settingControll = [[settingViewViewController alloc] init];
     UINavigationController *nav4 = [[UINavigationController alloc] initWithRootViewController:settingControll];
-    nav4.tabBarController.title = @"Setting";
+    nav4.tabBarItem.title = @"Setting";
     tab.viewControllers = @[nav1,nav2,nav3,nav4];
     self.window.rootViewController = tab;
     [self.window makeKeyAndVisible];
