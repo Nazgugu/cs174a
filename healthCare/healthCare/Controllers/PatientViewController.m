@@ -118,6 +118,7 @@
 #pragma mark - textfield delegate
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
+    [self.view setFrame:self.originalFrame];
     switch (textField.tag) {
         case 1:
         {

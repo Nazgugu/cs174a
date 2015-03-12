@@ -36,6 +36,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
      self.edgesForExtendedLayout = UIRectEdgeBottom;
+    self.title = @"Patient Detail";
     _thisPatient = [[Singleton sharedData].patientArray objectAtIndex:self.pateintIndex];
 }
 
