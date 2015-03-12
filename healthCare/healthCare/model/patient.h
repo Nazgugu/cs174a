@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "scheduledPlan.h"
+#import "allergy.h"
 
 //Patient Keys
 extern NSString * const patientIdKey;
@@ -52,6 +54,11 @@ extern NSString * const GuardianZipKey;
 @property (strong, nonatomic) NSString *city;
 @property (strong, nonatomic) NSString *state;
 @property (strong, nonatomic) NSString *zip;
+
+//plan array
+@property (strong, nonatomic) NSArray *scheduledPlan;
+//allergy array
+@property (strong, nonatomic) NSArray *allergies;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 

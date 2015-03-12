@@ -28,6 +28,11 @@
 		AEF985011AB015C8000FF661 /* patient.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF985001AB015C8000FF661 /* patient.m */; };
 		AEF985041AB0322D000FF661 /* settingViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF985031AB0322D000FF661 /* settingViewViewController.m */; };
 		AEF985071AB0E822000FF661 /* Singleton.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF985061AB0E822000FF661 /* Singleton.m */; };
+		AEF9850A1AB113A5000FF661 /* doctor.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF985091AB113A5000FF661 /* doctor.m */; };
+		AEF9850D1AB11412000FF661 /* scheduledPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF9850C1AB11412000FF661 /* scheduledPlan.m */; };
+		AEF985101AB11464000FF661 /* allergy.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF9850F1AB11464000FF661 /* allergy.m */; };
+		AEF985151AB11A5B000FF661 /* PatientDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF985131AB11A5B000FF661 /* PatientDetailViewController.m */; };
+		AEF985161AB11A5B000FF661 /* PatientDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEF985141AB11A5B000FF661 /* PatientDetailViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +84,15 @@
 		AEF985031AB0322D000FF661 /* settingViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = settingViewViewController.m; path = Controllers/settingViewViewController.m; sourceTree = "<group>"; };
 		AEF985051AB0E822000FF661 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Singleton.h; path = model/Singleton.h; sourceTree = "<group>"; };
 		AEF985061AB0E822000FF661 /* Singleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Singleton.m; path = model/Singleton.m; sourceTree = "<group>"; };
+		AEF985081AB113A5000FF661 /* doctor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = doctor.h; path = model/doctor.h; sourceTree = "<group>"; };
+		AEF985091AB113A5000FF661 /* doctor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = doctor.m; path = model/doctor.m; sourceTree = "<group>"; };
+		AEF9850B1AB11412000FF661 /* scheduledPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scheduledPlan.h; path = model/scheduledPlan.h; sourceTree = "<group>"; };
+		AEF9850C1AB11412000FF661 /* scheduledPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = scheduledPlan.m; path = model/scheduledPlan.m; sourceTree = "<group>"; };
+		AEF9850E1AB11464000FF661 /* allergy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = allergy.h; path = model/allergy.h; sourceTree = "<group>"; };
+		AEF9850F1AB11464000FF661 /* allergy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = allergy.m; path = model/allergy.m; sourceTree = "<group>"; };
+		AEF985121AB11A5B000FF661 /* PatientDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PatientDetailViewController.h; path = Controllers/detailController/PatientDetailViewController.h; sourceTree = "<group>"; };
+		AEF985131AB11A5B000FF661 /* PatientDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PatientDetailViewController.m; path = Controllers/detailController/PatientDetailViewController.m; sourceTree = "<group>"; };
+		AEF985141AB11A5B000FF661 /* PatientDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PatientDetailViewController.xib; path = Controllers/detailController/PatientDetailViewController.xib; sourceTree = "<group>"; };
 		C72C27E3013EA1C1EB543FCA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -127,6 +141,12 @@
 				AEF985001AB015C8000FF661 /* patient.m */,
 				AEF985051AB0E822000FF661 /* Singleton.h */,
 				AEF985061AB0E822000FF661 /* Singleton.m */,
+				AEF985081AB113A5000FF661 /* doctor.h */,
+				AEF985091AB113A5000FF661 /* doctor.m */,
+				AEF9850B1AB11412000FF661 /* scheduledPlan.h */,
+				AEF9850C1AB11412000FF661 /* scheduledPlan.m */,
+				AEF9850E1AB11464000FF661 /* allergy.h */,
+				AEF9850F1AB11464000FF661 /* allergy.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -226,6 +246,7 @@
 		AE84A6781AAD6DCC00B8F945 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				AEF985111AB11A24000FF661 /* DetailControllers */,
 				AE84A6621AAD6D2200B8F945 /* PatientViewController.h */,
 				AE84A6631AAD6D2200B8F945 /* PatientViewController.m */,
 				AE84A6641AAD6D2200B8F945 /* PatientViewController.xib */,
@@ -248,6 +269,16 @@
 				AE84A67B1AAE254300B8F945 /* InsetTextField.m */,
 			);
 			name = Textfield;
+			sourceTree = "<group>";
+		};
+		AEF985111AB11A24000FF661 /* DetailControllers */ = {
+			isa = PBXGroup;
+			children = (
+				AEF985121AB11A5B000FF661 /* PatientDetailViewController.h */,
+				AEF985131AB11A5B000FF661 /* PatientDetailViewController.m */,
+				AEF985141AB11A5B000FF661 /* PatientDetailViewController.xib */,
+			);
+			name = DetailControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -336,6 +367,7 @@
 				AE84A6661AAD6D2200B8F945 /* PatientViewController.xib in Resources */,
 				AE35EA0D1AAFDA3C00453E02 /* ProgressHUD.bundle in Resources */,
 				AE84A64A1AAD6CC600B8F945 /* Images.xcassets in Resources */,
+				AEF985161AB11A5B000FF661 /* PatientDetailViewController.xib in Resources */,
 				AE84A66B1AAD6D3200B8F945 /* DoctorViewController.xib in Resources */,
 				AE84A6701AAD6D4500B8F945 /* AdminViewController.xib in Resources */,
 			);
@@ -392,15 +424,19 @@
 				AE84A6421AAD6CC600B8F945 /* AppDelegate.m in Sources */,
 				AE84A6651AAD6D2200B8F945 /* PatientViewController.m in Sources */,
 				AEF985041AB0322D000FF661 /* settingViewViewController.m in Sources */,
+				AEF985101AB11464000FF661 /* allergy.m in Sources */,
+				AEF9850A1AB113A5000FF661 /* doctor.m in Sources */,
 				AEF985011AB015C8000FF661 /* patient.m in Sources */,
 				AE35EA0E1AAFDA3C00453E02 /* ProgressHUD.m in Sources */,
 				AE84A6761AAD6DAC00B8F945 /* TabBarViewController.m in Sources */,
 				AE84A6731AAD6D5A00B8F945 /* LoginViewController.m in Sources */,
+				AEF985151AB11A5B000FF661 /* PatientDetailViewController.m in Sources */,
 				AE84A66F1AAD6D4500B8F945 /* AdminViewController.m in Sources */,
 				AE35EA071AAF835700453E02 /* connectionManager.m in Sources */,
 				AE84A63F1AAD6CC600B8F945 /* main.m in Sources */,
 				AE84A66A1AAD6D3200B8F945 /* DoctorViewController.m in Sources */,
 				AE84A67C1AAE254300B8F945 /* InsetTextField.m in Sources */,
+				AEF9850D1AB11412000FF661 /* scheduledPlan.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

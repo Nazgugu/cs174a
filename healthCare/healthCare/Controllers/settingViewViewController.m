@@ -8,6 +8,7 @@
 
 #import "settingViewViewController.h"
 #import "LoginViewController.h"
+#import "Singleton.h"
 
 @interface settingViewViewController ()
 
@@ -35,6 +36,8 @@
 {
     LoginViewController *login = [[LoginViewController alloc] init];
     [self presentViewController:login animated:YES completion:^{
+        [Singleton sharedData].patientArray = nil;
+        [Singleton sharedData].currentPatient = nil;
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"loginSuccess"];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"currentPatient"];
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"patientId"];

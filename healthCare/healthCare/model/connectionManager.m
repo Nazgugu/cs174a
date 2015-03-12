@@ -115,6 +115,48 @@
     [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
 }
 
+- (void)fetchAllPatientsInBackground:(arrayBlock)block
+{
+    NSLog(@"called");
+    [ProgressHUD show:@"Fetching" Interaction:NO];
+    //NSLog(@"patient = %@",patientId);
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [[AFHTTPRequestOperationManager manager].operationQueue cancelAllOperations];
+    _urlString = [NSString stringWithFormat:@"http://%@:8888/fetchAllPatients.php",[[NSUserDefaults standardUserDefaults] objectForKey:@"serverKey"]];
+    //NSLog(@"url = %@",_urlString);
+    NSURL *url = [NSURL URLWithString:_urlString];
+    NSMutableURLRequest *requst = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:5];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:requst];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if ([responseObject isKindOfClass:[NSDictionary class]])
+        {
+            if ([[responseObject objectForKey:@"success"] boolValue])
+            {
+                NSArray *resultArray = [responseObject objectForKey:@"result"];
+                NSLog(@"%@",[responseObject objectForKey:@"result"]);
+                block(resultArray,@"success");
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [ProgressHUD dismiss];
+            }
+            else
+            {
+                block(nil,[responseObject objectForKey:@"error"]);
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [ProgressHUD dismiss];
+            }
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"not good");
+        NSLog(@"%@",[error description]);
+        block(nil,@"Network Error");
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [ProgressHUD dismiss];
+    }];
+    [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
+}
+
 - (void)loginInBackgroundWithDoctorId:(NSString *)doctorId andBlock:(boolBlock)block
 {
     [ProgressHUD show:@"Fetching" Interaction:NO];

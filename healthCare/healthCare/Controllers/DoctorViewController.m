@@ -8,6 +8,8 @@
 
 #import "DoctorViewController.h"
 #import "connectionManager.h"
+#import "Singleton.h"
+#import "patient.h"
 
 @interface DoctorViewController () <UITabBarControllerDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -56,6 +58,14 @@
 {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"currentDoctor"])
     {
+        if ([Singleton sharedData].patientArray && [Singleton sharedData].patientArray.count > 0)
+        {
+            [self.tableView reloadData];
+        }
+        else
+        {
+            [self fetchPatients];
+        }
         self.tableView.hidden = NO;
         self.navigationItem.rightBarButtonItem = nil;
         self.navigationItem.leftBarButtonItem = self.logoutButton;
@@ -63,9 +73,32 @@
     else
     {
         self.tableView.hidden = YES;
+        [Singleton sharedData].patientArray = nil;
         self.navigationItem.rightBarButtonItem = self.loginButton;
         self.navigationItem.leftBarButtonItem = nil;
     }
+}
+
+- (void)fetchPatients
+{
+    [[connectionManager sharedManager] fetchAllPatientsInBackground:^(NSArray *objects, NSString *error) {
+       if (objects)
+       {
+           for (NSDictionary *dict in objects)
+           {
+               patient *newPatient = [[patient alloc] initWithDictionary:dict];
+               [[Singleton sharedData].patientArray addObject:newPatient];
+               if ([Singleton sharedData].patientArray.count == objects.count)
+               {
+                   [self.tableView reloadData];
+               }
+           }
+       }
+        else
+        {
+            [self showErrorAlert:@"error!"];
+        }
+    }];
 }
 
 - (void)doctorLogout
@@ -125,7 +158,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return [Singleton sharedData].patientArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -141,19 +174,14 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    switch (indexPath.row) {
-        case 0:
-            cell.textLabel.text = @"view Patients";
-            break;
-        case 1:
-            cell.textLabel.text = @"view and edit plans";
-            break;
-        case 2:
-            cell.textLabel.text = @"view and edit allergy";
-        default:
-            break;
-    }
+    patient *temp = [[Singleton sharedData].patientArray objectAtIndex:indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"PatientId: %@, Name: %@ %@",temp.patientId,temp.GivenName,temp.FamilyName];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -25,6 +25,10 @@
     self = [super init];
     if (self)
     {
+        if (!_patientArray)
+        {
+            _patientArray = [[NSMutableArray alloc] init];
+        }
     }
     return self;
 }

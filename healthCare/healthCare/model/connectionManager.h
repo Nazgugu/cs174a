@@ -11,6 +11,7 @@
 
 typedef void (^boolBlock)(BOOL succeed, NSString *error);
 typedef void (^objectBlock)(id Object, NSString *error);
+typedef void (^arrayBlock)(NSArray *objects, NSString *error);
 
 @interface connectionManager : NSObject
 
@@ -26,4 +27,8 @@ typedef void (^objectBlock)(id Object, NSString *error);
 
 //login as doctor
 - (void)loginInBackgroundWithDoctorId:(NSString *)doctorId andBlock:(boolBlock)block;
+
+//fetch all patients
+- (void)fetchAllPatientsInBackground:(arrayBlock)block;
+
 @end

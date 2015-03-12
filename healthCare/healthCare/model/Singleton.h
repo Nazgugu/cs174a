@@ -13,6 +13,8 @@
 
 @property (strong, nonatomic) patient *currentPatient;
 
+@property (strong, nonatomic) NSMutableArray *patientArray;
+
 + (instancetype)sharedData;
 
 @end
