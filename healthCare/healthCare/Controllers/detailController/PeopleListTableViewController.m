@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 Liu Zhe. All rights reserved.
 //
 
-#import "PepleListTableViewController.h"
+#import "PeopleListTableViewController.h"
 
-@interface PepleListTableViewController ()
+@interface PeopleListTableViewController ()
 
 @end
 
-@implementation PepleListTableViewController
+@implementation PeopleListTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,14 +32,11 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
     return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
+
     return 0;
 }
 

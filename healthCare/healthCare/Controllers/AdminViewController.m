@@ -7,6 +7,7 @@
 //
 
 #import "AdminViewController.h"
+#import "PeopleListTableViewController.h"
 
 @interface AdminViewController () <UITabBarControllerDelegate,UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -68,6 +69,35 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    PeopleListTableViewController *list = [[PeopleListTableViewController alloc] init];
+    switch (indexPath.row) {
+        case 0:
+        {
+            list.type = ListTypeAllergy;
+        }break;
+        case 1:
+        {
+            list.type = ListTypePatientMoreAllergy;
+        }
+            break;
+        case 2:
+        {
+            list.type = ListTypePatientPlanToday;
+        }
+            break;
+        case 3:
+        {
+            list.type= ListTypeAuthorMorePatient;
+        }
+            break;
+        default:
+            break;
+    }
+    [self.navigationController pushViewController:list animated:YES];
+}
 
 
 /*
