@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14D87h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14D87h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AdminViewController">
             <connections>
+                <outlet property="tableView" destination="6pk-l0-G3v" id="PBy-f1-i8r"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -13,7 +14,23 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="6pk-l0-G3v">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="TM4-vK-nqI"/>
+                        <outlet property="delegate" destination="-1" id="TYa-Ha-Hca"/>
+                    </connections>
+                </tableView>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="6pk-l0-G3v" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="2ob-fL-o5T"/>
+                <constraint firstItem="6pk-l0-G3v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="DbU-K3-W1Q"/>
+                <constraint firstAttribute="bottom" secondItem="6pk-l0-G3v" secondAttribute="bottom" id="Ihf-Kn-1RR"/>
+                <constraint firstAttribute="trailing" secondItem="6pk-l0-G3v" secondAttribute="trailing" id="n4j-QV-lrg"/>
+            </constraints>
             <point key="canvasLocation" x="240" y="447"/>
         </view>
     </objects>

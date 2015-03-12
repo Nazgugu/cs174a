@@ -8,7 +8,8 @@
 
 #import "AdminViewController.h"
 
-@interface AdminViewController () <UITabBarControllerDelegate,UIAlertViewDelegate>
+@interface AdminViewController () <UITabBarControllerDelegate,UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
@@ -18,44 +19,56 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"Administrator";
-    UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"adminLogout" style:UIBarButtonItemStylePlain target:self action:@selector(adminLogout)];
-    self.navigationItem.rightBarButtonItem = logout;
-    self.navigationItem.rightBarButtonItem = logout;
-    UIBarButtonItem *adminLogin = [[UIBarButtonItem alloc] initWithTitle:@"adminLogin" style:UIBarButtonItemStylePlain target:self action:@selector(adminLogin)];
-    self.navigationItem.leftBarButtonItem = adminLogin;
     self.tabBarController.delegate = self;
-}
-
-- (void)adminLogout
-{
-}
-
-- (void)adminLogin
-{
-    UIAlertView *loginAlert = [[UIAlertView alloc] init];
-    loginAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    loginAlert.cancelButtonIndex = 1;
-    loginAlert.title = @"Login As Admin";
-    loginAlert.message = @"Please enter adminId";
-    [loginAlert addButtonWithTitle:@"Confirm"];
-    [loginAlert addButtonWithTitle:@"Cancel"];
-    loginAlert.delegate = self;
-    [loginAlert show];
-}
-
-#pragma mark - AlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0)
-    {
-        NSLog(@"I am gonna login as Doctor");
-    }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 4;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"usable"];
+    if (!cell)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"usable"];
+    }
+    switch (indexPath.row) {
+        case 0:
+            cell.textLabel.text = @"Patient number for each type of allergy";
+            break;
+        case 1:
+            cell.textLabel.text = @"Patients who have more than one allergy";
+            break;
+        case 2:
+            cell.textLabel.text = @"Patients who have plan for surgery today";
+            break;
+        case 3:
+            cell.textLabel.text = @"Authors with more than one patiens";
+            break;
+        default:
+            break;
+    }
+    return cell;
+}
+
+
 
 /*
 #pragma mark - Navigation

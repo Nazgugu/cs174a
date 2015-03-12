@@ -12,6 +12,7 @@
 		AE1426881AB143B2009AF69C /* allergyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE1426861AB143B2009AF69C /* allergyViewController.xib */; };
 		AE14268C1AB143D1009AF69C /* PlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE14268A1AB143D1009AF69C /* PlanViewController.m */; };
 		AE14268D1AB143D1009AF69C /* PlanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE14268B1AB143D1009AF69C /* PlanViewController.xib */; };
+		AE1426901AB1609B009AF69C /* PepleListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE14268F1AB1609B009AF69C /* PepleListTableViewController.m */; };
 		AE35EA071AAF835700453E02 /* connectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AE35EA061AAF835700453E02 /* connectionManager.m */; };
 		AE35EA0D1AAFDA3C00453E02 /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE35EA0A1AAFDA3C00453E02 /* ProgressHUD.bundle */; };
 		AE35EA0E1AAFDA3C00453E02 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = AE35EA0C1AAFDA3C00453E02 /* ProgressHUD.m */; };
@@ -58,6 +59,8 @@
 		AE1426891AB143D1009AF69C /* PlanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlanViewController.h; path = Controllers/detailController/PlanViewController.h; sourceTree = "<group>"; };
 		AE14268A1AB143D1009AF69C /* PlanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlanViewController.m; path = Controllers/detailController/PlanViewController.m; sourceTree = "<group>"; };
 		AE14268B1AB143D1009AF69C /* PlanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlanViewController.xib; path = Controllers/detailController/PlanViewController.xib; sourceTree = "<group>"; };
+		AE14268E1AB1609B009AF69C /* PepleListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PepleListTableViewController.h; path = Controllers/detailController/PepleListTableViewController.h; sourceTree = "<group>"; };
+		AE14268F1AB1609B009AF69C /* PepleListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PepleListTableViewController.m; path = Controllers/detailController/PepleListTableViewController.m; sourceTree = "<group>"; };
 		AE35EA051AAF835700453E02 /* connectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = connectionManager.h; path = model/connectionManager.h; sourceTree = "<group>"; };
 		AE35EA061AAF835700453E02 /* connectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = connectionManager.m; path = model/connectionManager.m; sourceTree = "<group>"; };
 		AE35EA0A1AAFDA3C00453E02 /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
@@ -293,6 +296,8 @@
 				AE1426891AB143D1009AF69C /* PlanViewController.h */,
 				AE14268A1AB143D1009AF69C /* PlanViewController.m */,
 				AE14268B1AB143D1009AF69C /* PlanViewController.xib */,
+				AE14268E1AB1609B009AF69C /* PepleListTableViewController.h */,
+				AE14268F1AB1609B009AF69C /* PepleListTableViewController.m */,
 			);
 			name = DetailControllers;
 			sourceTree = "<group>";
@@ -440,6 +445,7 @@
 			files = (
 				AEF985071AB0E822000FF661 /* Singleton.m in Sources */,
 				AE84A6421AAD6CC600B8F945 /* AppDelegate.m in Sources */,
+				AE1426901AB1609B009AF69C /* PepleListTableViewController.m in Sources */,
 				AE84A6651AAD6D2200B8F945 /* PatientViewController.m in Sources */,
 				AEF985041AB0322D000FF661 /* settingViewViewController.m in Sources */,
 				AEF985101AB11464000FF661 /* allergy.m in Sources */,
