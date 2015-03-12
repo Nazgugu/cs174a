@@ -8,6 +8,7 @@
 
 #import "DoctorViewController.h"
 #import "connectionManager.h"
+#import "PatientDetailViewController.h"
 #import "Singleton.h"
 #import "patient.h"
 
@@ -181,7 +182,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    PatientDetailViewController *detail = [[PatientDetailViewController alloc] init];
+    detail.pateintIndex = indexPath.row;
+    detail.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:detail animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

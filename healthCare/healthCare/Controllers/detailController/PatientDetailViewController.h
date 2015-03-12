@@ -10,4 +10,6 @@
 
 @interface PatientDetailViewController : UIViewController
 
+@property (nonatomic) NSInteger pateintIndex;
+
 @end
