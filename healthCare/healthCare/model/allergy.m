@@ -12,6 +12,7 @@ NSString * const allergyIdKey = @"Id";
 NSString * const allergySubstanceKey = @"Substance";
 NSString * const allergyReactionKey = @"Reaction";
 NSString * const allergyStatusKey = @"status";
+NSString * const allergyAffectPeopleKey = @"NumberOfPatients";
 
 @implementation allergy
 
@@ -24,6 +25,18 @@ NSString * const allergyStatusKey = @"status";
         self.Substance = [dict objectForKey:allergySubstanceKey];
         self.Reaction = [dict objectForKey:allergyReactionKey];
         self.status = [dict objectForKey:allergyStatusKey];
+    }
+    return self;
+}
+
+- (instancetype)initWithShortDict:(NSDictionary *)sDict
+{
+    self = [super init];
+    if (self)
+    {
+        self.Id = [sDict objectForKey:allergyIdKey];
+        self.Substance = [sDict objectForKey:allergySubstanceKey];
+        self.numberOfPeopleInfected = [sDict objectForKey:allergyAffectPeopleKey];
     }
     return self;
 }

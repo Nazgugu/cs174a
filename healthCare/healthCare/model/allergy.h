@@ -14,7 +14,10 @@
 @property (strong, nonatomic) NSString *Substance;
 @property (strong, nonatomic) NSString *Reaction;
 @property (strong, nonatomic) NSString *status;
+@property (strong, nonatomic) NSString *numberOfPeopleInfected;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
+
+- (instancetype)initWithShortDict:(NSDictionary *)sDict;
 
 @end

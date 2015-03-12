@@ -42,4 +42,16 @@ typedef void (^arrayBlock)(NSArray *objects, NSString *error);
 //update the allergy
 - (void)updateAllergyInBackgroundWithAllergy:(allergy *)allergy andCompletionBlock:(boolBlock)block;
 
+//fetch number of patient for each type of allergy(substance)
+- (void)fetchAllergyAndPatientCount:(arrayBlock)block;
+
+//fetch patient with more than one allergy
+- (void)fetchPatientWithMoreAllergy:(arrayBlock)block;
+
+//fetch patient have surgery today
+- (void)fetchPatientHaveSurgeryToday:(arrayBlock)block;
+
+//fetch author with more than one patient
+- (void)fetchAuthorMorePatients:(arrayBlock)block;
+
 @end

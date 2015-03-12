@@ -55,6 +55,9 @@ extern NSString * const GuardianZipKey;
 @property (strong, nonatomic) NSString *state;
 @property (strong, nonatomic) NSString *zip;
 
+@property (strong, nonatomic) NSString *numberOfAllergies;
+@property (strong, nonatomic) NSString *planDate;
+
 //plan array
 @property (strong, nonatomic) NSMutableArray *scheduledPlan;
 //allergy array
