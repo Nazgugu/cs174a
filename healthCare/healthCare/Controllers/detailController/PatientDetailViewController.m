@@ -59,6 +59,8 @@
         if (succeed)
         {
             self.thisPatient = [[Singleton sharedData].patientArray objectAtIndex:self.pateintIndex];
+            //NSLog(@"allergy count = %ld",self.thisPatient.allergies.count);
+            //NSLog(@"plan count = %lu",(unsigned long)self.thisPatient.scheduledPlan.count);
             [self.tableView reloadData];
             self.tableView.hidden = NO;
         }
@@ -78,7 +80,6 @@
 
 - (void)setUpView
 {
-    
     self.patientIdLabel.text = [NSString stringWithFormat:@"PatientId: %@",self.thisPatient.patientId];
     self.patientProviderIdLabel.text = [NSString stringWithFormat:@"ProviderId: %@",self.thisPatient.providerId];
     self.patientGivenNameLabel.text = [NSString stringWithFormat:@"GivenName: %@",self.thisPatient.GivenName];
