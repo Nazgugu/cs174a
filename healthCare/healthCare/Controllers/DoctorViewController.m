@@ -35,10 +35,6 @@
     self.navigationItem.rightBarButtonItem = self.loginButton;
 
     self.tabBarController.delegate = self;
-    if (![Singleton sharedData].patientArray)
-    {
-        [Singleton sharedData].patientArray = [[NSMutableArray alloc] init];
-    }
 }
 
 - (void)doctorLogin
@@ -63,13 +59,16 @@
 {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"currentDoctor"])
     {
+        NSLog(@"here");
         if ([Singleton sharedData].patientArray && [Singleton sharedData].patientArray.count > 0)
         {
+            NSLog(@"first case");
             [self.tableView reloadData];
             self.tableView.hidden = NO;
         }
         else
         {
+            NSLog(@"second case");
             [self fetchPatients];
         }
         self.navigationItem.rightBarButtonItem = nil;
@@ -86,13 +85,21 @@
 
 - (void)fetchPatients
 {
+    NSLog(@"fetching");
     [[connectionManager sharedManager] fetchAllPatientsInBackground:^(NSArray *objects, NSString *error) {
        if (objects)
        {
+           //NSLog(@"Object count = %ld",objects.count);
+           if (![Singleton sharedData].patientArray)
+           {
+               [Singleton sharedData].patientArray = [[NSMutableArray alloc] init];
+           }
            for (NSDictionary *dict in objects)
            {
                patient *newPatient = [[patient alloc] initWithDictionary:dict];
                [[Singleton sharedData].patientArray addObject:newPatient];
+               //NSLog(@"new patient name: %@ %@",newPatient.GivenName,newPatient.FamilyName);
+               //NSLog(@"count = %ld",[Singleton sharedData].patientArray.count);
                if ([Singleton sharedData].patientArray.count == objects.count)
                {
                    [self.tableView reloadData];
@@ -137,6 +144,7 @@
     [[connectionManager sharedManager] loginInBackgroundWithDoctorId:doctorId andBlock:^(BOOL succeed, NSString *error) {
        if (succeed)
        {
+           NSLog(@"succeed");
            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"currentDoctor"];
            [[NSUserDefaults standardUserDefaults] synchronize];
            [self configureView];
@@ -182,6 +190,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     patient *temp = [[Singleton sharedData].patientArray objectAtIndex:indexPath.row];
+    //NSLog(@"format = %@ %@",temp.GivenName,temp.FamilyName);
     cell.textLabel.text = [NSString stringWithFormat:@"PatientId: %@, Name: %@ %@",temp.patientId,temp.GivenName,temp.FamilyName];
     return cell;
 }
