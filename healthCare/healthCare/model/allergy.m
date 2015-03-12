@@ -11,7 +11,7 @@
 NSString * const allergyIdKey = @"Id";
 NSString * const allergySubstanceKey = @"Substance";
 NSString * const allergyReactionKey = @"Reaction";
-NSString * const allergyStatusKey = @"status";
+NSString * const allergyStatusKey = @"Status";
 NSString * const allergyAffectPeopleKey = @"NumberOfPatients";
 
 @implementation allergy

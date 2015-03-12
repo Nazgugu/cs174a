@@ -67,16 +67,23 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    [self setAllergy];
+}
+
+- (void)setAllergy
+{
     self.theAllergy.Substance = self.substanceTextField.text;
     self.theAllergy.Reaction = self.ReactionTextField.text;
     self.theAllergy.status = self.statusTextField.text;
 }
 
 - (IBAction)updateAllergy:(id)sender {
+    [self setAllergy];
     [[connectionManager sharedManager] updateAllergyInBackgroundWithAllergy:self.theAllergy andCompletionBlock:^(BOOL succeed, NSString *error) {
        if (succeed)
        {
            [ProgressHUD showSuccess:@"Succeed"];
+           [self closeKeyBoard];
            [self dismissViewControllerAnimated:YES completion:^{
                
            }];

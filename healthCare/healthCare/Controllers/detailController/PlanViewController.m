@@ -70,10 +70,12 @@
 }
 
 - (IBAction)updatePlan:(id)sender {
+    [self setPlan];
    [[connectionManager sharedManager] updatePlanInBackgroudWithPlan:self.theplan andCompletionBlock:^(BOOL succeed, NSString *error) {
       if (succeed)
       {
           [ProgressHUD showSuccess:@"succeed"];
+          [self closeKeyBoard];
           [self dismissViewControllerAnimated:YES completion:^{
               
           }];
@@ -91,11 +93,15 @@
     [alert show];
 }
 
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
+- (void)setPlan
 {
     self.theplan.Activity = self.planActivityLabel.text;
     self.theplan.scheduledDate = self.planDateLabel.text;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [self setPlan];
 }
 
 /*
