@@ -96,6 +96,7 @@
         default:
             break;
     }
+    list.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:list animated:YES];
 }
 
