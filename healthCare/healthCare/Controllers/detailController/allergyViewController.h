@@ -1,0 +1,16 @@
+//
+//  allergyViewController.h
+//  healthCare
+//
+//  Created by Liu Zhe on 3/11/15.
+//  Copyright (c) 2015 Liu Zhe. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "allergy.h"
+
+@interface allergyViewController : UIViewController
+
+@property (strong, nonatomic) allergy *theAllergy;
+
+@end

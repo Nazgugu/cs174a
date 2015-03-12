@@ -10,8 +10,10 @@
 #import "patient.h"
 #import "Singleton.h"
 #import "connectionManager.h"
+#import "allergyViewController.h"
+#import "PlanViewController.h"
 
-@interface PatientDetailViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface PatientDetailViewController ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *patientIdLabel;
 @property (weak, nonatomic) IBOutlet UILabel *patientProviderIdLabel;
@@ -151,6 +153,36 @@
         cell.textLabel.text = [NSString stringWithFormat:@"PlanId: %@, Activity: %@",thePlan.PlanId,thePlan.Activity];
     }
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0)
+    {
+        [self popAlertViewForAllergyAtIndex:indexPath.row];
+    }
+    else
+    {
+        [self popAlertViewForPlanAtIndex:indexPath.row];
+    }
+}
+
+- (void)popAlertViewForAllergyAtIndex:(NSInteger)index
+{
+    allergyViewController *allergyView = [[allergyViewController alloc] init];
+    allergyView.theAllergy = [self.thisPatient.allergies objectAtIndex:index];
+    [self presentViewController:allergyView animated:YES completion:^{
+        
+    }];
+}
+
+- (void)popAlertViewForPlanAtIndex:(NSInteger)index
+{
+    PlanViewController *planView = [[PlanViewController alloc] init];
+    planView.theplan = [self.thisPatient.scheduledPlan objectAtIndex:index];
+    [self presentViewController:planView animated:YES completion:^{
+        
+    }];
 }
 
 /*

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		86865E1A798A5C5E3976DD28 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24DA78E8DD6FFC76B383119D /* libPods.a */; };
+		AE1426871AB143B2009AF69C /* allergyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1426851AB143B2009AF69C /* allergyViewController.m */; };
+		AE1426881AB143B2009AF69C /* allergyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE1426861AB143B2009AF69C /* allergyViewController.xib */; };
+		AE14268C1AB143D1009AF69C /* PlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE14268A1AB143D1009AF69C /* PlanViewController.m */; };
+		AE14268D1AB143D1009AF69C /* PlanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE14268B1AB143D1009AF69C /* PlanViewController.xib */; };
 		AE35EA071AAF835700453E02 /* connectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AE35EA061AAF835700453E02 /* connectionManager.m */; };
 		AE35EA0D1AAFDA3C00453E02 /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE35EA0A1AAFDA3C00453E02 /* ProgressHUD.bundle */; };
 		AE35EA0E1AAFDA3C00453E02 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = AE35EA0C1AAFDA3C00453E02 /* ProgressHUD.m */; };
@@ -48,6 +52,12 @@
 /* Begin PBXFileReference section */
 		24DA78E8DD6FFC76B383119D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		44A773D01E0AB0224163ECF5 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		AE1426841AB143B2009AF69C /* allergyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = allergyViewController.h; path = Controllers/detailController/allergyViewController.h; sourceTree = "<group>"; };
+		AE1426851AB143B2009AF69C /* allergyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = allergyViewController.m; path = Controllers/detailController/allergyViewController.m; sourceTree = "<group>"; };
+		AE1426861AB143B2009AF69C /* allergyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = allergyViewController.xib; path = Controllers/detailController/allergyViewController.xib; sourceTree = "<group>"; };
+		AE1426891AB143D1009AF69C /* PlanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlanViewController.h; path = Controllers/detailController/PlanViewController.h; sourceTree = "<group>"; };
+		AE14268A1AB143D1009AF69C /* PlanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlanViewController.m; path = Controllers/detailController/PlanViewController.m; sourceTree = "<group>"; };
+		AE14268B1AB143D1009AF69C /* PlanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlanViewController.xib; path = Controllers/detailController/PlanViewController.xib; sourceTree = "<group>"; };
 		AE35EA051AAF835700453E02 /* connectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = connectionManager.h; path = model/connectionManager.h; sourceTree = "<group>"; };
 		AE35EA061AAF835700453E02 /* connectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = connectionManager.m; path = model/connectionManager.m; sourceTree = "<group>"; };
 		AE35EA0A1AAFDA3C00453E02 /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
@@ -277,6 +287,12 @@
 				AEF985121AB11A5B000FF661 /* PatientDetailViewController.h */,
 				AEF985131AB11A5B000FF661 /* PatientDetailViewController.m */,
 				AEF985141AB11A5B000FF661 /* PatientDetailViewController.xib */,
+				AE1426841AB143B2009AF69C /* allergyViewController.h */,
+				AE1426851AB143B2009AF69C /* allergyViewController.m */,
+				AE1426861AB143B2009AF69C /* allergyViewController.xib */,
+				AE1426891AB143D1009AF69C /* PlanViewController.h */,
+				AE14268A1AB143D1009AF69C /* PlanViewController.m */,
+				AE14268B1AB143D1009AF69C /* PlanViewController.xib */,
 			);
 			name = DetailControllers;
 			sourceTree = "<group>";
@@ -364,6 +380,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE84A64D1AAD6CC600B8F945 /* LaunchScreen.xib in Resources */,
+				AE14268D1AB143D1009AF69C /* PlanViewController.xib in Resources */,
+				AE1426881AB143B2009AF69C /* allergyViewController.xib in Resources */,
 				AE84A6661AAD6D2200B8F945 /* PatientViewController.xib in Resources */,
 				AE35EA0D1AAFDA3C00453E02 /* ProgressHUD.bundle in Resources */,
 				AE84A64A1AAD6CC600B8F945 /* Images.xcassets in Resources */,
@@ -433,10 +451,12 @@
 				AEF985151AB11A5B000FF661 /* PatientDetailViewController.m in Sources */,
 				AE84A66F1AAD6D4500B8F945 /* AdminViewController.m in Sources */,
 				AE35EA071AAF835700453E02 /* connectionManager.m in Sources */,
+				AE1426871AB143B2009AF69C /* allergyViewController.m in Sources */,
 				AE84A63F1AAD6CC600B8F945 /* main.m in Sources */,
 				AE84A66A1AAD6D3200B8F945 /* DoctorViewController.m in Sources */,
 				AE84A67C1AAE254300B8F945 /* InsetTextField.m in Sources */,
 				AEF9850D1AB11412000FF661 /* scheduledPlan.m in Sources */,
+				AE14268C1AB143D1009AF69C /* PlanViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
