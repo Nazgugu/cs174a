@@ -121,7 +121,7 @@
 
 - (void)fetchAllPatientsInBackground:(arrayBlock)block
 {
-    NSLog(@"called");
+    //NSLog(@"called");
     [ProgressHUD show:@"Fetching" Interaction:NO];
     //NSLog(@"patient = %@",patientId);
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -230,6 +230,14 @@
             {
                 //need to store the allergy and plan data in the patient
                 patient *tempPatient = [[Singleton sharedData].patientArray objectAtIndex:index];
+                if (!tempPatient.allergies)
+                {
+                    tempPatient.allergies = [[NSMutableArray alloc] init];
+                }
+                if (!tempPatient.scheduledPlan)
+                {
+                    tempPatient.scheduledPlan = [[NSMutableArray alloc] init];
+                }
                 [tempPatient.allergies removeAllObjects];
                 [tempPatient.scheduledPlan removeAllObjects];
                 if ([Response objectForKey:@"allergy"])
@@ -239,37 +247,24 @@
                     for (NSDictionary *aDict in temp)
                     {
                         allergy *newAllergy = [[allergy alloc] initWithDictionary:aDict];
-                        //NSLog(@"allergy id = %@",newAllergy.Id);
                         [tempPatient.allergies addObject:newAllergy];
-                        if (tempPatient.allergies.count == temp.count)
-                        {
-                            NSLog(@"allergy count = %ld",tempPatient.allergies.count);
-                            if ([Response objectForKey:@"plan"])
-                            {
-                                temp = [Response objectForKey:@"plan"];
-                                //NSLog(@"plan = %@",temp);
-                                for (NSDictionary *pDict in temp)
-                                {
-                                    scheduledPlan *newPlan = [[scheduledPlan alloc] initWithDictionary:pDict];
-                                    NSLog(@"new plan id = %@",newPlan.PlanId);
-                                    [tempPatient.scheduledPlan addObject:newPlan];
-                                    if (tempPatient.scheduledPlan.count == temp.count)
-                                    {
-                                        NSLog(@"plan count = %ld",tempPatient.scheduledPlan.count);
-                                        NSLog(@"tempPatient allergy count = %ld, plan count = %ld",tempPatient.allergies.count, tempPatient.scheduledPlan.count);
-                                        [[Singleton sharedData].patientArray replaceObjectAtIndex:index withObject:tempPatient];
-                                        patient *test = [[Singleton sharedData].patientArray objectAtIndex:index];
-                                        NSLog(@"in here allergy count = %ld, plan count = %ld",test.allergies.count, test.scheduledPlan.count);
-                                        block(YES,@"success");
-                                        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-                                        [ProgressHUD dismiss];
-                                    }
-                                }
-                            }
-
-                        }
+                            //NSLog(@"allergy count = %ld",tempPatient.allergies.count);
                     }
                 }
+                if ([Response objectForKey:@"plan"])
+                {
+                    temp = [Response objectForKey:@"plan"];
+                    for (NSDictionary *pDict in temp)
+                    {
+                        scheduledPlan *newPlan = [[scheduledPlan alloc] initWithDictionary:pDict];
+                        [tempPatient.scheduledPlan addObject:newPlan];
+                    }
+
+                }
+                [[Singleton sharedData].patientArray replaceObjectAtIndex:index withObject:tempPatient];
+                block(YES,@"success");
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [ProgressHUD dismiss];
             }
             else
             {
