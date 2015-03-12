@@ -31,4 +31,7 @@ typedef void (^arrayBlock)(NSArray *objects, NSString *error);
 //fetch all patients
 - (void)fetchAllPatientsInBackground:(arrayBlock)block;
 
+//fetch the plans and allergies
+- (void)fetchAllergyAndPlansWithPatientId:(NSString *)patientId andPatientIndex:(NSInteger)index andBlock:(boolBlock)block;
+
 @end

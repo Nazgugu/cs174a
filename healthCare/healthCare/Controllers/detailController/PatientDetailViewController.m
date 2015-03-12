@@ -9,8 +9,10 @@
 #import "PatientDetailViewController.h"
 #import "patient.h"
 #import "Singleton.h"
+#import "connectionManager.h"
 
-@interface PatientDetailViewController ()
+@interface PatientDetailViewController ()<UITableViewDataSource, UITableViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UILabel *patientIdLabel;
 @property (weak, nonatomic) IBOutlet UILabel *patientProviderIdLabel;
 @property (weak, nonatomic) IBOutlet UILabel *patientGivenNameLabel;
@@ -19,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *patientGenderLabel;
 @property (weak, nonatomic) IBOutlet UILabel *patientBirthdayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *patientFileCreationDateLabel;
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) patient *thisPatient;
 
@@ -35,6 +39,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    self.tableView.hidden = YES;
     [self setUpView];
 }
 
@@ -50,11 +55,30 @@
 
 - (void)fetchPlanAndSchedule
 {
-    
+    [[connectionManager sharedManager] fetchAllergyAndPlansWithPatientId:_thisPatient.patientId andPatientIndex:self.pateintIndex andBlock:^(BOOL succeed, NSString *error) {
+        if (succeed)
+        {
+            self.thisPatient = [[Singleton sharedData].patientArray objectAtIndex:self.pateintIndex];
+            [self.tableView reloadData];
+            self.tableView.hidden = NO;
+        }
+        else
+        {
+            self.tableView.hidden = YES;
+            [self showErrorAlert:error];
+        }
+    }];
+}
+
+- (void)showErrorAlert:(NSString *)error
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
 }
 
 - (void)setUpView
 {
+    
     self.patientIdLabel.text = [NSString stringWithFormat:@"PatientId: %@",self.thisPatient.patientId];
     self.patientProviderIdLabel.text = [NSString stringWithFormat:@"ProviderId: %@",self.thisPatient.providerId];
     self.patientGivenNameLabel.text = [NSString stringWithFormat:@"GivenName: %@",self.thisPatient.GivenName];
@@ -63,6 +87,69 @@
     self.patientGenderLabel.text = [NSString stringWithFormat:@"Gender: %@",self.thisPatient.Gender];
     self.patientBirthdayLabel.text = [NSString stringWithFormat:@"Birthday: %@",self.thisPatient.BirthTime];
     self.patientFileCreationDateLabel.text = [NSString stringWithFormat:@"Creation: %@",self.thisPatient.xmlHealthCreationTime];
+}
+
+#pragma mark - tableView data source
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    //in this section we store the patient's allergy
+    if (section == 0)
+    {
+       return self.thisPatient.allergies.count;
+    }
+    //in this section we store the patient's plan
+    else
+    {
+        return self.thisPatient.scheduledPlan.count;
+    }
+    return 0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60.0f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UILabel *headerLabel = [[UILabel alloc] init];
+    [headerLabel sizeToFit];
+    if (section == 0)
+    {
+        headerLabel.text = @"Allergies";
+    }
+    else
+    {
+        headerLabel.text = @"Plans";
+    }
+    return headerLabel;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuse"];
+    if (!cell)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reuse"];
+    }
+    //allergies
+    if (indexPath.section == 0)
+    {
+        allergy *theAllergy = [self.thisPatient.allergies objectAtIndex:indexPath.row];
+        cell.textLabel.text = [NSString stringWithFormat:@"id: %@, substance: %@",theAllergy.Id,theAllergy.Substance];
+    }
+    //plans
+    else
+    {
+        scheduledPlan *thePlan = [self.thisPatient.scheduledPlan objectAtIndex:indexPath.row];
+        cell.textLabel.text = [NSString stringWithFormat:@"PlanId: %@, Activity: %@",thePlan.PlanId,thePlan.Activity];
+    }
+    return cell;
 }
 
 /*

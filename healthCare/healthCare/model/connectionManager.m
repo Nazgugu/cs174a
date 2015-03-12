@@ -9,6 +9,10 @@
 #import "connectionManager.h"
 #import <AFNetworking/AFNetworking.h>
 #import "ProgressHUD.h"
+#import "allergy.h"
+#import "scheduledPlan.h"
+#import "Singleton.h"
+#import "patient.h"
 
 @interface connectionManager()
 
@@ -198,6 +202,74 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [ProgressHUD dismiss];
     }];
+    [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
+}
+
+- (void)fetchAllergyAndPlansWithPatientId:(NSString *)patientId andPatientIndex:(NSInteger)index andBlock:(boolBlock)block
+{
+    [ProgressHUD show:@"Fetching" Interaction:NO];
+    //NSLog(@"patient = %@",patientId);
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [[AFHTTPRequestOperationManager manager].operationQueue cancelAllOperations];
+    _urlString = [NSString stringWithFormat:@"http://%@:8888/fetchPatientAllergyPlan.php",[[NSUserDefaults standardUserDefaults] objectForKey:@"serverKey"]];
+    //NSLog(@"url = %@",_urlString);
+    NSURL *url = [NSURL URLWithString:_urlString];
+    NSMutableURLRequest *requst = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:5];
+    [requst setHTTPMethod:@"POST"];
+    [requst setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
+    NSString *postingString = [NSString stringWithFormat:@"patientId=%@",patientId];
+    [requst setHTTPBody:[postingString dataUsingEncoding:NSUTF8StringEncoding]];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:requst];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if ([responseObject isKindOfClass:[NSDictionary class]])
+        {
+            NSDictionary *Response = responseObject;
+            NSArray *temp;
+            if ([[Response objectForKey:@"success"] boolValue])
+            {
+                //need to store the allergy and plan data in the patient
+                patient *tempPatient = [[Singleton sharedData].patientArray objectAtIndex:index];
+                [tempPatient.allergies removeAllObjects];
+                [tempPatient.scheduledPlan removeAllObjects];
+                if ([Response objectForKey:@"allergy"])
+                {
+                    temp = [Response objectForKey:@"allergy"];
+                    for (NSDictionary *aDict in temp)
+                    {
+                        allergy *newAllergy = [[allergy alloc] initWithDictionary:aDict];
+                        [tempPatient.allergies addObject:newAllergy];
+                    }
+                }
+                if ([Response objectForKey:@"plan"])
+                {
+                    temp = [Response objectForKey:@"plan"];
+                    for (NSDictionary *pDict in temp)
+                    {
+                        scheduledPlan *newPlan = [[scheduledPlan alloc] initWithDictionary:pDict];
+                        [tempPatient.scheduledPlan addObject:newPlan];
+                    }
+                }
+                [[Singleton sharedData].patientArray replaceObjectAtIndex:index withObject:tempPatient];
+                block(YES,@"success");
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [ProgressHUD dismiss];
+            }
+            else
+            {
+                block(NO,[Response objectForKey:@"error"]);
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [ProgressHUD dismiss];
+            }
+
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",[error description]);
+        block(NO,@"Network Error");
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [ProgressHUD dismiss];
+    }];
+    
     [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
 }
 

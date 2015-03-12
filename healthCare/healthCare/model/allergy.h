@@ -15,4 +15,6 @@
 @property (strong, nonatomic) NSString *Reaction;
 @property (strong, nonatomic) NSString *status;
 
+- (instancetype)initWithDictionary:(NSDictionary *)dict;
+
 @end

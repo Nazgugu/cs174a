@@ -14,4 +14,6 @@
 @property (strong, nonatomic) NSString *Activity;
 @property (strong, nonatomic) NSString *scheduledDate;
 
+- (instancetype)initWithDictionary:(NSDictionary *)dict;
+
 @end

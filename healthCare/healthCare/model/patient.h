@@ -56,9 +56,9 @@ extern NSString * const GuardianZipKey;
 @property (strong, nonatomic) NSString *zip;
 
 //plan array
-@property (strong, nonatomic) NSArray *scheduledPlan;
+@property (strong, nonatomic) NSMutableArray *scheduledPlan;
 //allergy array
-@property (strong, nonatomic) NSArray *allergies;
+@property (strong, nonatomic) NSMutableArray *allergies;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 
