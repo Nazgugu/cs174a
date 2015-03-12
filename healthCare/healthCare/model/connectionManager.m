@@ -284,9 +284,98 @@
     [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
 }
 
+- (void)updatePlanInBackgroudWithPlan:(scheduledPlan *)plan andCompletionBlock:(boolBlock)block
+{
+    [ProgressHUD show:@"Updating" Interaction:NO];
+    //NSLog(@"patient = %@",patient.patientId);
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [[AFHTTPRequestOperationManager manager].operationQueue cancelAllOperations];
+    _urlString = [NSString stringWithFormat:@"http://%@:8888/modifySchedule.php",[[NSUserDefaults standardUserDefaults] objectForKey:@"serverKey"]];
+    NSLog(@"url = %@",_urlString);
+    NSURL *url = [NSURL URLWithString:_urlString];
+    NSMutableURLRequest *requst = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:5];
+    [requst setHTTPMethod:@"POST"];
+    [requst setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
+    NSString *postingString = [NSString stringWithFormat:@"PlanId=%@&Activity=%@&ScheduledDate=%@",plan.PlanId,plan.Activity,plan.scheduledDate];
+    //NSLog(@"body = %@",postingString);
+    [requst setHTTPBody:[postingString dataUsingEncoding:NSUTF8StringEncoding]];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:requst];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if ([responseObject isKindOfClass:[NSDictionary class]])
+        {
+            //NSLog(@"%@",responseObject);
+            NSDictionary *dict = responseObject;
+            if ([[dict objectForKey:@"success"] boolValue])
+            {
+                block(YES,@"Update Success");
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [ProgressHUD dismiss];
+            }
+            else
+            {
+                block(NO,[dict objectForKey:@"error"]);
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [ProgressHUD dismiss];
+            }
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",[error description]);
+        block(NO,@"Network Error");
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [ProgressHUD dismiss];
+    }];
+    [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
+}
+
+- (void)updateAllergyInBackgroundWithAllergy:(allergy *)allergy andCompletionBlock:(boolBlock)block
+{
+    [ProgressHUD show:@"Updating" Interaction:NO];
+    //NSLog(@"patient = %@",patient.patientId);
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [[AFHTTPRequestOperationManager manager].operationQueue cancelAllOperations];
+    _urlString = [NSString stringWithFormat:@"http://%@:8888/modifyAllergy.php",[[NSUserDefaults standardUserDefaults] objectForKey:@"serverKey"]];
+    NSLog(@"url = %@",_urlString);
+    NSURL *url = [NSURL URLWithString:_urlString];
+    NSMutableURLRequest *requst = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:5];
+    [requst setHTTPMethod:@"POST"];
+    [requst setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
+    NSString *postingString = [NSString stringWithFormat:@"Id=%@&Substance=%@&Reaction=%@&Status=%@",allergy.Id,allergy.Substance,allergy.Reaction,allergy.status];
+    //NSLog(@"body = %@",postingString);
+    [requst setHTTPBody:[postingString dataUsingEncoding:NSUTF8StringEncoding]];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:requst];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if ([responseObject isKindOfClass:[NSDictionary class]])
+        {
+            //NSLog(@"%@",responseObject);
+            NSDictionary *dict = responseObject;
+            if ([[dict objectForKey:@"success"] boolValue])
+            {
+                block(YES,@"Update Success");
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [ProgressHUD dismiss];
+            }
+            else
+            {
+                block(NO,[dict objectForKey:@"error"]);
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [ProgressHUD dismiss];
+            }
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",[error description]);
+        block(NO,@"Network Error");
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [ProgressHUD dismiss];
+    }];
+    [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
+
+}
+
 - (void)updatePatientInfoWithPatient:(patient *)patient inBackgroundWithBlock:(boolBlock)block
 {
-    [ProgressHUD show:@"Fetching" Interaction:NO];
+    [ProgressHUD show:@"Updating" Interaction:NO];
     //NSLog(@"patient = %@",patient.patientId);
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [[AFHTTPRequestOperationManager manager].operationQueue cancelAllOperations];

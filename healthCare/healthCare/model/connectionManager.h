@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "patient.h"
+#import "scheduledPlan.h"
+#import "allergy.h"
 
 typedef void (^boolBlock)(BOOL succeed, NSString *error);
 typedef void (^objectBlock)(id Object, NSString *error);
@@ -33,5 +35,11 @@ typedef void (^arrayBlock)(NSArray *objects, NSString *error);
 
 //fetch the plans and allergies
 - (void)fetchAllergyAndPlansWithPatientId:(NSString *)patientId andPatientIndex:(NSInteger)index andBlock:(boolBlock)block;
+
+//update the plan
+- (void)updatePlanInBackgroudWithPlan:(scheduledPlan *)plan andCompletionBlock:(boolBlock)block;
+
+//update the allergy
+- (void)updateAllergyInBackgroundWithAllergy:(allergy *)allergy andCompletionBlock:(boolBlock)block;
 
 @end

@@ -8,6 +8,8 @@
 
 #import "PlanViewController.h"
 #import "InsetTextField.h"
+#import "connectionManager.h"
+#import "ProgressHUD.h"
 
 
 @interface PlanViewController ()<UITextFieldDelegate>
@@ -24,6 +26,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.titleLabel.text = [NSString stringWithFormat:@"Plan Id: %@",self.theplan.PlanId];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeKeyBoard)];
+    tap.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:tap];
+}
+
+- (void)closeKeyBoard
+{
+    [self.view endEditing:YES];
 }
 
 - (void)setUpView
@@ -47,6 +57,7 @@
 }
 
 
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -58,7 +69,27 @@
 }
 
 - (IBAction)updatePlan:(id)sender {
+   [[connectionManager sharedManager] updatePlanInBackgroudWithPlan:self.theplan andCompletionBlock:^(BOOL succeed, NSString *error) {
+      if (succeed)
+      {
+          [ProgressHUD showSuccess:@"succeed"];
+          [self dismissViewControllerAnimated:YES completion:^{
+              
+          }];
+      }
+       else
+       {
+           [self showErrorAlert:error];
+       }
+   }];
 }
+
+- (void)showErrorAlert:(NSString *)error
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
+
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {

@@ -8,6 +8,8 @@
 
 #import "allergyViewController.h"
 #import "InsetTextField.h"
+#import "connectionManager.h"
+#import "ProgressHUD.h"
 
 @interface allergyViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *allergyIdLabel;
@@ -23,7 +25,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self setUpView];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeKeyBoard)];
+    tap.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:tap];
 }
+
+- (void)closeKeyBoard
+{
+    [self.view endEditing:YES];
+}
+
 
 - (void)setUpView
 {
@@ -62,7 +73,27 @@
 }
 
 - (IBAction)updateAllergy:(id)sender {
+    [[connectionManager sharedManager] updateAllergyInBackgroundWithAllergy:self.theAllergy andCompletionBlock:^(BOOL succeed, NSString *error) {
+       if (succeed)
+       {
+           [ProgressHUD showSuccess:@"Succeed"];
+           [self dismissViewControllerAnimated:YES completion:^{
+               
+           }];
+       }
+        else
+        {
+            [self showErrorAlert:error];
+        }
+    }];
 }
+
+- (void)showErrorAlert:(NSString *)error
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

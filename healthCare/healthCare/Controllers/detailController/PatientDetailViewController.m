@@ -144,7 +144,7 @@
     if (indexPath.section == 0)
     {
         allergy *theAllergy = [self.thisPatient.allergies objectAtIndex:indexPath.row];
-        cell.textLabel.text = [NSString stringWithFormat:@"id: %@, substance: %@",theAllergy.Id,theAllergy.Substance];
+        cell.textLabel.text = [NSString stringWithFormat:@"id: %@, substance: %@, Reaction: %@",theAllergy.Id,theAllergy.Substance,theAllergy.Reaction];
     }
     //plans
     else
