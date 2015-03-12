@@ -215,6 +215,8 @@
     else
     {
         cell.textLabel.text = @"No Match";
+        cell.textLabel.textColor = [UIColor lightGrayColor];
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
     }
     return cell;
 }
