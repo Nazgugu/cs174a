@@ -142,19 +142,21 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuse"];
     if (!cell)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reuse"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"reuse"];
     }
     //allergies
     if (indexPath.section == 0)
     {
         allergy *theAllergy = [self.thisPatient.allergies objectAtIndex:indexPath.row];
-        cell.textLabel.text = [NSString stringWithFormat:@"id: %@, substance: %@, Reaction: %@",theAllergy.Id,theAllergy.Substance,theAllergy.Reaction];
+        cell.textLabel.text = [NSString stringWithFormat:@"id: %@, substance: %@",theAllergy.Id,theAllergy.Substance];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"Reaction: %@, Status: %@",theAllergy.Reaction, theAllergy.status];
     }
     //plans
     else
     {
         scheduledPlan *thePlan = [self.thisPatient.scheduledPlan objectAtIndex:indexPath.row];
         cell.textLabel.text = [NSString stringWithFormat:@"PlanId: %@, Activity: %@",thePlan.PlanId,thePlan.Activity];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"Plan date: %@",thePlan.scheduledDate];
     }
     return cell;
 }
