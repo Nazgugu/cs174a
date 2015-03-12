@@ -35,6 +35,10 @@
     self.navigationItem.rightBarButtonItem = self.loginButton;
 
     self.tabBarController.delegate = self;
+    if (![Singleton sharedData].patientArray)
+    {
+        [Singleton sharedData].patientArray = [[NSMutableArray alloc] init];
+    }
 }
 
 - (void)doctorLogin
@@ -62,12 +66,12 @@
         if ([Singleton sharedData].patientArray && [Singleton sharedData].patientArray.count > 0)
         {
             [self.tableView reloadData];
+            self.tableView.hidden = NO;
         }
         else
         {
             [self fetchPatients];
         }
-        self.tableView.hidden = NO;
         self.navigationItem.rightBarButtonItem = nil;
         self.navigationItem.leftBarButtonItem = self.logoutButton;
     }
@@ -92,6 +96,7 @@
                if ([Singleton sharedData].patientArray.count == objects.count)
                {
                    [self.tableView reloadData];
+                   self.tableView.hidden = NO;
                }
            }
        }
@@ -106,6 +111,7 @@
 {
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"currentDoctor"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [[Singleton sharedData].patientArray removeAllObjects];
     [self configureView];
 }
 
