@@ -122,6 +122,9 @@
 {
     UILabel *headerLabel = [[UILabel alloc] init];
     [headerLabel sizeToFit];
+    headerLabel.font = [UIFont systemFontOfSize:12.0f];
+    headerLabel.textColor = [UIColor whiteColor];
+    headerLabel.backgroundColor = [UIColor lightGrayColor];
     if (section == 0)
     {
         headerLabel.text = @"Allergies";
