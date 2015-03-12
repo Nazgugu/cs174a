@@ -163,7 +163,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reusing"];
     if (!cell)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reusing"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"reusing"];
     }
     // Configure the cell...
     switch (self.type) {
@@ -172,18 +172,20 @@
             allergy *theAllergy = [self.dataArray objectAtIndex:indexPath.row];
             if (!theAllergy.Substance || [theAllergy.Substance isEqualToString:@""])
             {
-                cell.textLabel.text = [NSString stringWithFormat:@"Substance: NO SUBSTANCE, number of people affected: %@",theAllergy.numberOfPeopleInfected];
+                cell.textLabel.text = [NSString stringWithFormat:@"Substance: NO SUBSTANCE"];
             }
             else
             {
-                cell.textLabel.text = [NSString stringWithFormat:@"Substance: %@, number of people affected: %@",theAllergy.Substance,theAllergy.numberOfPeopleInfected];
+                cell.textLabel.text = [NSString stringWithFormat:@"Substance: %@",theAllergy.Substance];
             }
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"number of people affected: %@",theAllergy.numberOfPeopleInfected];
         }
             break;
         case ListTypePatientMoreAllergy:
         {
             patient *thePatient = [self.dataArray objectAtIndex:indexPath.row];
-            cell.textLabel.text = [NSString stringWithFormat:@"PatientId: %@, Name: %@ %@, Number of Allergies: %@",thePatient.patientId,thePatient.GivenName,thePatient.FamilyName,thePatient.numberOfAllergies];
+            cell.textLabel.text = [NSString stringWithFormat:@"PatientId: %@, Name: %@ %@",thePatient.patientId,thePatient.GivenName,thePatient.FamilyName];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"Number of Allergies: %@",thePatient.numberOfAllergies];
         }
             break;
         case ListTypePatientPlanToday:
@@ -196,7 +198,8 @@
         case ListTypeAuthorMorePatient:
         {
             doctor *theDoctor = [self.dataArray objectAtIndex:indexPath.row];
-            cell.textLabel.text = [NSString stringWithFormat:@"AuthorId: %@, Name: %@ %@ %@, Number of Patients: %@",theDoctor.AuthorId,theDoctor.AuthorTitle,theDoctor.AuthorFirstName,theDoctor.AuthorLastName,theDoctor.numberOfPatients];
+            cell.textLabel.text = [NSString stringWithFormat:@"AuthorId: %@, Name: %@ %@ %@",theDoctor.AuthorId,theDoctor.AuthorTitle,theDoctor.AuthorFirstName,theDoctor.AuthorLastName];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"Number of Patients: %@",theDoctor.numberOfPatients];
         }
             break;
         default:

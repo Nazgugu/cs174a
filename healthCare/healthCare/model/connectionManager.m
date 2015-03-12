@@ -316,7 +316,7 @@
     //NSLog(@"patient = %@",patientId);
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [[AFHTTPRequestOperationManager manager].operationQueue cancelAllOperations];
-    _urlString = [NSString stringWithFormat:@"http://%@:8888/planToday.php",[[NSUserDefaults standardUserDefaults] objectForKey:@"serverKey"]];
+    _urlString = [NSString stringWithFormat:@"http://%@:8888/authorMorePatient.php",[[NSUserDefaults standardUserDefaults] objectForKey:@"serverKey"]];
     //NSLog(@"url = %@",_urlString);
     NSURL *url = [NSURL URLWithString:_urlString];
     NSMutableURLRequest *requst = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:5];
@@ -332,7 +332,13 @@
                 //NSLog(@"%@",[responseObject objectForKey:@"result"]);
                 for (NSDictionary *dict in resultArray)
                 {
+//                    NSLog(@"dict = %@",dict);
                     doctor *newDoctor = [[doctor alloc] initWithDictionary:dict];
+//                    NSLog(@"%@",newDoctor.AuthorId);
+//                    NSLog(@"%@",newDoctor.AuthorTitle);
+//                    NSLog(@"%@",newDoctor.AuthorFirstName);
+//                    NSLog(@"%@",newDoctor.AuthorLastName);
+//                    NSLog(@"%@",newDoctor.numberOfPatients);
                     [final addObject:newDoctor];
                 }
                 block(final,@"success");
