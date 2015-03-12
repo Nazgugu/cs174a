@@ -149,7 +149,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
+    
+    if (self.dataArray.count == 0)
+    {
+        return 1;
+    }
     return self.dataArray.count;
 }
 
@@ -165,47 +169,53 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"reusing"];
     }
-    // Configure the cell...
-    switch (self.type) {
-        case ListTypeAllergy:
-        {
-            allergy *theAllergy = [self.dataArray objectAtIndex:indexPath.row];
-            if (!theAllergy.Substance || [theAllergy.Substance isEqualToString:@""])
+    if (self.dataArray.count > 0)
+    {
+        // Configure the cell...
+        switch (self.type) {
+            case ListTypeAllergy:
             {
-                cell.textLabel.text = [NSString stringWithFormat:@"Substance: NO SUBSTANCE"];
+                allergy *theAllergy = [self.dataArray objectAtIndex:indexPath.row];
+                if (!theAllergy.Substance || [theAllergy.Substance isEqualToString:@""])
+                {
+                    cell.textLabel.text = [NSString stringWithFormat:@"Substance: NO SUBSTANCE"];
+                }
+                else
+                {
+                    cell.textLabel.text = [NSString stringWithFormat:@"Substance: %@",theAllergy.Substance];
+                }
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"number of people affected: %@",theAllergy.numberOfPeopleInfected];
             }
-            else
+                break;
+            case ListTypePatientMoreAllergy:
             {
-                cell.textLabel.text = [NSString stringWithFormat:@"Substance: %@",theAllergy.Substance];
+                patient *thePatient = [self.dataArray objectAtIndex:indexPath.row];
+                cell.textLabel.text = [NSString stringWithFormat:@"PatientId: %@, Name: %@ %@",thePatient.patientId,thePatient.GivenName,thePatient.FamilyName];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"Number of Allergies: %@",thePatient.numberOfAllergies];
             }
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"number of people affected: %@",theAllergy.numberOfPeopleInfected];
+                break;
+            case ListTypePatientPlanToday:
+            {
+                patient *thePatient = [self.dataArray objectAtIndex:indexPath.row];
+                cell.textLabel.text = [NSString stringWithFormat:@"PatientId: %@, Name: %@ %@",thePatient.patientId,thePatient.GivenName,thePatient.FamilyName];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"Scheduled Date: %@",thePatient.planDate];
+            }
+                break;
+            case ListTypeAuthorMorePatient:
+            {
+                doctor *theDoctor = [self.dataArray objectAtIndex:indexPath.row];
+                cell.textLabel.text = [NSString stringWithFormat:@"AuthorId: %@, Name: %@ %@ %@",theDoctor.AuthorId,theDoctor.AuthorTitle,theDoctor.AuthorFirstName,theDoctor.AuthorLastName];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"Number of Patients: %@",theDoctor.numberOfPatients];
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        case ListTypePatientMoreAllergy:
-        {
-            patient *thePatient = [self.dataArray objectAtIndex:indexPath.row];
-            cell.textLabel.text = [NSString stringWithFormat:@"PatientId: %@, Name: %@ %@",thePatient.patientId,thePatient.GivenName,thePatient.FamilyName];
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"Number of Allergies: %@",thePatient.numberOfAllergies];
-        }
-            break;
-        case ListTypePatientPlanToday:
-        {
-            patient *thePatient = [self.dataArray objectAtIndex:indexPath.row];
-            cell.textLabel.text = [NSString stringWithFormat:@"PatientId: %@, Name: %@ %@",thePatient.patientId,thePatient.GivenName,thePatient.FamilyName];
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"Scheduled Date: %@",thePatient.planDate];
-        }
-            break;
-        case ListTypeAuthorMorePatient:
-        {
-            doctor *theDoctor = [self.dataArray objectAtIndex:indexPath.row];
-            cell.textLabel.text = [NSString stringWithFormat:@"AuthorId: %@, Name: %@ %@ %@",theDoctor.AuthorId,theDoctor.AuthorTitle,theDoctor.AuthorFirstName,theDoctor.AuthorLastName];
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"Number of Patients: %@",theDoctor.numberOfPatients];
-        }
-            break;
-        default:
-            break;
     }
-    
+    else
+    {
+        cell.textLabel.text = @"No Match";
+    }
     return cell;
 }
 
