@@ -9,6 +9,7 @@
                 <outlet property="planActivityLabel" destination="Miv-f1-wBl" id="c1o-dR-0Cq"/>
                 <outlet property="planDateLabel" destination="JhG-5T-6vP" id="5nX-bH-6me"/>
                 <outlet property="titleLabel" destination="2GW-Yi-5hB" id="WnM-u7-UP4"/>
+                <outlet property="view" destination="JfQ-SQ-6dN" id="1Wl-tP-j7W"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
