@@ -29,6 +29,7 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeKeyBoard)];
     tap.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:tap];
+    [self setUpView];
 }
 
 - (void)closeKeyBoard
